@@ -22,7 +22,7 @@ img{
 }
 .hati {
   position: relative; 
-  max-width: 450px;
+ 
 }
 .overlay {
   
@@ -42,9 +42,11 @@ img{
 
 .hati:hover .overlay {
   opacity: 1;
-  transform: scale(1.05)
+
 }
 img:hover{
 	transform: scale(1.1);
 }
-
+body{
+background: #9899;
+}
