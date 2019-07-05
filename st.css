@@ -41,7 +41,7 @@ img{
 
 .hati:hover .overlay {
   opacity: 1;
-  transform: scale(1.05);
+  
 }
 img:hover{
 	transform: scale(1.1);
