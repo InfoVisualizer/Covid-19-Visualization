@@ -234,7 +234,7 @@ label{
             </div>
             <div>
                 
-              <svg height="500px" width="580px">
+              <svg height="450px" width="480px">
                 <g id="body2" style="transform: translate(50px,10px);margin-top:50px ;"></g>
             </svg>
 
@@ -386,7 +386,7 @@ label{
           
             function getMapConfig(){
           let width = 550;
-          let height = 500;
+          let height = 450;
           let container=d3.select("#G")
           let zoom = d3.zoom()
                .scaleExtent([1, 40])
@@ -1667,8 +1667,8 @@ label{
 var margin =  {top: 20, right: 10, bottom: 70, left: 50};
 var marginOverview = {top: 30, right: 10, bottom: 20, left: 40};
 var selectorHeight = 20;
-var width = 500 - margin.left - margin.right;
-var height = 500 - margin.top - margin.bottom - selectorHeight;
+var width = 450 - margin.left - margin.right;
+var height = 450 - margin.top - margin.bottom - selectorHeight;
 var heightOverview = 80 - marginOverview.top - marginOverview.bottom;
        
 var maxLength = d3.max(data.map(function(d){ return d.country.length}))
@@ -2005,8 +2005,8 @@ function drawline(data){
 
 let body = d3.select("#body2")
 document.getElementById("body2").innerHTML="";
-let height = 450;
-let width = 500;
+let height = 400;
+let width = 400;
 
 function showtool(data, coord){ console.log(data)
 d3.select("#tooltip")
