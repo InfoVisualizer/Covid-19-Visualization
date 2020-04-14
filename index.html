@@ -1459,11 +1459,16 @@ label{
             {
               i=d3.selectAll("rect")._groups[0][j];
               
-                    d3.select(i).attr("fill","#2a5599")
+                    d3.select(i).classed("selected",false);
                     
               
               
             }
+            for(i=0;i<180;i++)
+        {
+          j=d3.select("#G").selectAll("path")._groups[0][i];
+          d3.select(j).classed("selected",false);
+        }
             
            if(c=="All")
            {
@@ -1473,7 +1478,7 @@ label{
           for(j=0;j<205;j++)
             {
               i=d3.selectAll("rect")._groups[0][j];
-                    d3.select(i).attr("fill","#2a5599")
+              d3.select(i).classed("selected",false);
             }
           return;
            }
@@ -1500,21 +1505,25 @@ label{
                 )
 
               d3.select(i).transition().duration(1000).attr("r",radius(i.__data__.confirmed)+15).attr("fill","red").transition().duration(1000).attr("r",radius(i.__data__.confirmed))
-                .transition().duration(1000).attr("r",radius(i.__data__.confirmed)+15).transition().duration(1000).attr("r",radius(i.__data__.confirmed))
-                .transition().duration(1000).attr("r",radius(i.__data__.confirmed)+15).transition().duration(1000).attr("r",radius(i.__data__.confirmed))
-                .transition().duration(1000).attr("r",radius(i.__data__.confirmed)+15).transition().duration(1000).attr("r",radius(i.__data__.confirmed))
-                .transition().duration(1000).attr("r",radius(i.__data__.confirmed)+15).transition().duration(1000).attr("r",radius(i.__data__.confirmed)).transition().duration(1000).attr("r",.5).attr("fill","blue")
+                .transition().duration(1000).attr("r",radius(i.__data__.confirmed)+15).transition().duration(1000).attr("r",radius(i.__data__.confirmed)).transition().duration(1000).attr("r",0).attr("fill","blue")
                 for(j=0;j<205;j++)
             {
               i=d3.selectAll("rect")._groups[0][j];
               if(i.__data__.country==c){
-                    d3.select(i).attr("fill","#992a5b")
+                    d3.select(i).classed("selected",true);
                     break;
               }
               // else{
               //   d3.select(i).attr("fill","#2a5599")
               // }
             }
+
+            for(i=0;i<180;i++)
+        {
+          j=d3.select("#G").selectAll("path")._groups[0][i];
+          if(j.__data__.country==c){
+          d3.select(j).classed("selected",true);}
+        }
                 break;
             }
              }
@@ -1535,22 +1544,26 @@ label{
 "</br>"+"People Recovered"
                 )
           d3.select(i).transition().duration(1000).attr("r",radius(i.__data__.deaths)+10).attr("fill","blue").transition().duration(1000).attr("r",radius(i.__data__.deaths))
-                .transition().duration(1000).attr("r",radius(i.__data__.deaths)+10).transition().duration(1000).attr("r",radius(i.__data__.deaths))
-                .transition().duration(1000).attr("r",radius(i.__data__.deaths)+10).transition().duration(1000).attr("r",radius(i.__data__.deaths))
-                .transition().duration(1000).attr("r",radius(i.__data__.deaths)+10).transition().duration(1000).attr("r",radius(i.__data__.deaths))
-                .transition().duration(1000).attr("r",radius(i.__data__.deaths)+10).transition().duration(1000).attr("r",radius(i.__data__.deaths)).transition().duration(1000).attr("r",.5).attr("fill","red")
+                .transition().duration(1000).attr("r",radius(i.__data__.deaths)+10).transition().duration(1000).attr("r",radius(i.__data__.deaths)).transition().duration(1000).attr("r",0).attr("fill","red")
               
                 for(j=0;j<205;j++)
             {
               i=d3.selectAll("rect")._groups[0][j];
               if(i.__data__.country==c){
-                    d3.select(i).attr("fill","#992a5b")
+                    d3.select(i).classed("selected",false);
                     break;
               }
               // else{
               //   d3.select(i).attr("fill","#2a5599")
               // }
             }
+
+            for(i=0;i<180;i++)
+        {
+          j=d3.select("#G").selectAll("path")._groups[0][i];
+          if(j.__data__.country==c){
+          d3.select(j).classed("selected",true);}
+        }
 
               break;
               }
@@ -1574,10 +1587,7 @@ label{
 "</br>"+"People Recovered"
                 )
                 d3.select(i).transition().duration(1000).attr("r",radius(i.__data__.recovered)+10).attr("fill","red").transition().duration(1000).attr("r",radius(i.__data__.recovered))
-               .transition().duration(1000).attr("r",radius(i.__data__.recovered)+10).transition().duration(1000).attr("r",radius(i.__data__.recovered))
-               .transition().duration(1000).attr("r",radius(i.__data__.recovered)+10).transition().duration(1000).attr("r",radius(i.__data__.recovered))
-               .transition().duration(1000).attr("r",radius(i.__data__.recovered)+10).transition().duration(1000).attr("r",radius(i.__data__.recovered))
-               .transition().duration(1000).attr("r",radius(i.__data__.recovered)+10).transition().duration(1000).attr("r",radius(i.__data__.recovered)).transition().duration(1000).attr("r",.5).attr("r",.5).attr("fill","green")
+               .transition().duration(1000).attr("r",radius(i.__data__.recovered)+10).transition().duration(1000).attr("r",radius(i.__data__.recovered)).transition().duration(1000).attr("r",0).attr("fill","green")
                
 
 
@@ -1585,9 +1595,16 @@ label{
             {
               i=d3.selectAll("rect")._groups[0][j];
               if(i.__data__.country==c){
-                    d3.select(i).attr("fill","#992a5b")
+                    d3.select(i).classed("selected",false);
                     break;
               }
+
+              for(i=0;i<180;i++)
+        {
+          j=d3.select("#G").selectAll("path")._groups[0][i];
+          if(j.__data__.country==c){
+          d3.select(j).classed("selected",true);}
+        }
               // else{
               //   d3.select(i).attr("fill","#2a5599")
               // }
@@ -1611,28 +1628,19 @@ label{
            {
             
              d3.select(i).transition().duration(1000).attr("r",radius(i.__data__.confirmed)+15).attr("fill","red").transition().duration(1000).attr("r",radius(i.__data__.confirmed))
-               .transition().duration(1000).attr("r",radius(i.__data__.confirmed)+15).transition().duration(1000).attr("r",radius(i.__data__.confirmed))
-               .transition().duration(1000).attr("r",radius(i.__data__.confirmed)+15).transition().duration(1000).attr("r",radius(i.__data__.confirmed))
-               .transition().duration(1000).attr("r",radius(i.__data__.confirmed)+15).transition().duration(1000).attr("r",radius(i.__data__.confirmed))
-               .transition().duration(1000).attr("r",radius(i.__data__.confirmed)+15).transition().duration(1000).attr("r",radius(i.__data__.confirmed)).transition().duration(1000).attr("r",.5).attr("fill","blue")
+               .transition().duration(1000).attr("r",radius(i.__data__.confirmed)+15).transition().duration(1000).attr("r",radius(i.__data__.confirmed)).transition().duration(1000).attr("r",0).attr("fill","blue")
            }
             }
             else if(currentvis=="death"){
              if(i.__data__.country==c){
          d3.select(i).transition().duration(1000).attr("r",radius(i.__data__.deaths)+10).attr("fill","blue").transition().duration(1000).attr("r",radius(i.__data__.deaths))
-               .transition().duration(1000).attr("r",radius(i.__data__.deaths)+10).transition().duration(1000).attr("r",radius(i.__data__.deaths))
-               .transition().duration(1000).attr("r",radius(i.__data__.deaths)+10).transition().duration(1000).attr("r",radius(i.__data__.deaths))
-               .transition().duration(1000).attr("r",radius(i.__data__.deaths)+10).transition().duration(1000).attr("r",radius(i.__data__.deaths))
-               .transition().duration(1000).attr("r",radius(i.__data__.deaths)+10).transition().duration(1000).attr("r",radius(i.__data__.deaths)).transition().duration(1000).attr("r",.5).attr("fill","red")
+               .transition().duration(1000).attr("r",radius(i.__data__.deaths)+10).transition().duration(1000).attr("r",radius(i.__data__.deaths)).transition().duration(1000).attr("r",0).attr("fill","red")
              }
             }
             else if(currentvis=="recovered"){
              if(i.__data__.country==c){
             d3.select(i).transition().duration(1000).attr("r",radius(i.__data__.recovered)+10).attr("fill","red").transition().duration(1000).attr("r",radius(i.__data__.recovered))
-               .transition().duration(1000).attr("r",radius(i.__data__.recovered)+10).transition().duration(1000).attr("r",radius(i.__data__.recovered))
-               .transition().duration(1000).attr("r",radius(i.__data__d.recovered)+10).transition().duration(1000).attr("r",radius(i.__data__.recovered))
-               .transition().duration(1000).attr("r",radius(i.__data__.recovered)+10).transition().duration(1000).attr("r",radius(i.__data__.recovered))
-               .transition().duration(1000).attr("r",radius(i.__data__.recovered)+10).transition().duration(1000).attr("r",radius(i.__data__.recovered)).transition().duration(1000).attr("r",.5).attr("fill","green")
+               .transition().duration(1000).attr("r",radius(i.__data__.recovered)+10).transition().duration(1000).attr("r",radius(i.__data__.recovered)).transition().duration(1000).attr("r",0).attr("fill","green")
              }
             }
            }
