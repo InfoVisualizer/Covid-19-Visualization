@@ -1213,20 +1213,19 @@ label{
                     lasso.selectedItems()
                         .classed("selected",true);
                     
-                    let d=[];
+                        let d=[];
                     let cn=[];
                     for(i of lasso.selectedItems()._groups[0]){
                 if(i.__data__!=null)
                 {
                   d.push(i.__data__)
+                  cn.push(i.__data__.country)
                 }
         }
-        
-        
-        total_case_print(d);
-        total_case_print1(d);
-        total_case_print2(d);
-        
+        total_case_print(d)
+        total_case_print1(d)
+        total_case_print2(d)
+
         l= d3.selectAll("rect")._groups[0]
        for(i=0;i<205;i++)
        {
@@ -1344,19 +1343,18 @@ label{
                     lasso.selectedItems()
                         .classed("selected",true);
                     
-                    let d=[];
+                        let d=[];
                     let cn=[];
                     for(i of lasso.selectedItems()._groups[0]){
                 if(i.__data__!=null)
                 {
                   d.push(i.__data__)
+                  cn.push(i.__data__.country)
                 }
         }
-        
-        
-        total_case_print(d);
-        total_case_print1(d);
-        total_case_print2(d);
+        total_case_print(d)
+        total_case_print1(d)
+        total_case_print2(d)
 
         l= d3.selectAll("rect")._groups[0]
        for(i=0;i<205;i++)
@@ -1640,7 +1638,7 @@ label{
             else if(currentvis=="recovered"){
              if(i.__data__.country==c){
             d3.select(i).transition().duration(1000).attr("r",radius(i.__data__.recovered)+10).attr("fill","red").transition().duration(1000).attr("r",radius(i.__data__.recovered))
-               .transition().duration(1000).attr("r",radius(i.__data__.recovered)+10).transition().duration(1000).attr("r",radius(i.__data__.recovered)).transition().duration(1000).attr("r",0).attr("fill","green")
+               .transition().duration(1000).attr("r",radius(i.__data__.recovered)+10).transition().duration(1000).attr("r",radius(i.__data__.recovered)).transition().duration(1000).attr("r",).attr("fill","green")
              }
             }
            }
