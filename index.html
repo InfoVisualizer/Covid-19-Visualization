@@ -2444,6 +2444,7 @@ body.append('g')
       .attr("r", 0)
       .style("fill", "red")//#69b3a2
 lasso()
+setTimeout(slide,1000)
 
 }
       
@@ -2506,7 +2507,7 @@ function lasso(){
         
         body.call(lasso);
 }
-setTimeout(slide,100)
+
  //end lasso
  function slide(){
    var len = slidedata.length
