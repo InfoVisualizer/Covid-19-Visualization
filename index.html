@@ -3,6 +3,22 @@
 
   <head>
       <style>
+        .y_axis path{
+          stroke: white;
+        }
+        .lg{
+          margin-left: 20px;
+        }
+.legend{
+              margin-right: 5px;
+          }
+#tooltip{
+	border: solid 2px black;
+	padding: 5px;
+	position: absolute;
+	display: none;
+	background-color: white;
+}
           body {
               font-family: Helvetica, Arial, sans-serif
           }
@@ -168,10 +184,10 @@ label{
   fill: red;
 }
                                                                           /* previousl 55 */
-          div.tooltip {position: absolute; text-align: left; width: 200px; height: 85px; padding: 15px;font: 14px calibri; background: #d60f23; color: white; border: 2px; border-radius: 8px; pointer-events: none;}
+          div.tooltip {position: absolute; text-align: left; width: 200px; height: 85px; padding: 15px;font: 14px calibri; background: gray; color:black; border: 2px; border-radius: 8px; pointer-events: none;}
 div.tooltip1{
 
-  position: absolute; text-align: left; width: 200px; height: 95px; padding: 15px;font: 14px calibri; background: purple; color: white; border: 2px; border-radius: 8px; pointer-events: none;
+  position: absolute; text-align: left; width: 200px; height: 95px; padding: 15px;font: 14px calibri; background: gray; color: black; border: 2px; border-radius: 8px; pointer-events: none;
  
 }
 /* 
@@ -179,6 +195,15 @@ div.tooltip1{
         fill: steelblue;
         clip-path: url(#clip);
       } */
+#Bar{
+  width: 390px;
+}
+      #BarChart{
+        margin-top: 35px;
+        margin-left: -25px;
+        margin-right: 0px;
+        margin-bottom: 0px;
+      }
         
       .subBar { 
         fill: gray;
@@ -282,11 +307,15 @@ div.tooltip1{
               </svg>
           </div>
           <div>
-              
-            <svg id="container" height="450px" width="500px">
-              <g id="body2" style="transform: translate(60px,10px);margin-top:50px ;"></g>
-          </svg>
-        
+              <div> 
+                <svg id="container" height="450px" width="500px"> 
+                  <g id="body2" style="transform: translate(60px,10px);margin-top:50px ;"></g>
+              </svg>
+              </div>
+              <div id="tooltip"></div>
+              <div style="transform: translate(190px,-250px);margin-top:50px ;"></div>
+            
+
 
           </div>
           <!-- <div>
@@ -437,7 +466,7 @@ div.tooltip1{
       
         
           function getMapConfig(){
-        let width = 550;
+        let width = 620;
         let height = 450;
         let container=d3.select("#G")
         let zoom = d3.zoom()
@@ -473,8 +502,8 @@ div.tooltip1{
       function getMapProjection(config) {
         let {width, height} = config;
         let projection = d3.geoMercator()
-        projection.scale(86)
-                  .translate([width / 2, height / 2+50])
+        projection.scale(98)
+                  .translate([width / 2, height / 2+110])
                   .rotate([0,0,0])
                   
         store.mapProjection = projection;
@@ -541,11 +570,11 @@ div.tooltip1{
                 else if(d.deaths>mc*.005)return '#fc9272';
                 else if(d.deaths>mc*.001)return "#fcbba1";
                 else if(d.deaths>0)return "#fcbba1";
-                else return "#fff5f0";
+                else return "#fff5f0";            
               }
               else if(currentvis=="recovered")
               { 
-                if (d.confirmed>mc*.9) return '#005a32';
+                if (d.recovered>mc*.9) return '#005a32';
                 else if(d.recovered>mc*.09) return '#238b45';
                 else if(d.recovered>mc*.01) return "#41ab5d";
                 else if(d.recovered>mc*.004) return "#74c476";
@@ -557,9 +586,10 @@ div.tooltip1{
             })
           .attr("stroke", "gray")
           .attr("stroke-width", .5)
-          .attr("stroke-linejoin", "round")
           .on("mousemove", function(d) {
-               d3.select(this).attr("fill", "purple")
+               d3.select(this)
+               .attr("stroke","black")
+               .attr("stroke-width", "1px")
                div
               .transition()
               .duration(200)
@@ -578,12 +608,13 @@ div.tooltip1{
                 store.date
               )
               .attr("class","tooltip1")
-              .style("left", d3.event.clientX + "px")
-              .style("top", d3.event.clientY - 28 + "px");
+              .style("left", 790 + "px")
+              .style("top", 235 + "px");
                
               })
             .on("mouseleave",function(d){
-              d3.select(this).attr("fill", function(d)
+
+              d3.select(this).attr("stroke","gray").attr("stroke-width",".5px").attr("fill", function(d)
               {
                 if (currentvis=="confirm")
               {                                                              //
@@ -609,7 +640,7 @@ div.tooltip1{
               }
               else if(currentvis=="recovered")
               { 
-                if (d.confirmed>mc*.9) return '#005a32';
+                if (d.recovered>mc*.9) return '#005a32';
                 else if(d.recovered>mc*.09) return '#238b45';
                 else if(d.recovered>mc*.01) return "#41ab5d";
                 else if(d.recovered>mc*.004) return "#74c476";
@@ -624,6 +655,225 @@ div.tooltip1{
               .duration(500)
               .style("opacity", 0);
             })
+
+
+if(currentvis!="death"){
+            var w = 300, h = 50;
+
+    d3.select("#s").remove()
+    var key = d3.select("#Map")
+      .append("svg")
+      .attr("id","s")
+      .attr("width", w)
+      .attr("height", h);
+
+    var legend = key.append("defs")
+      .append("svg:linearGradient")
+      .attr("id", "gradient")
+      .attr("x1", "0%")
+      .attr("y1", "100%")                             
+      .attr("x2", "100%")
+      .attr("y2", "100%")
+      .attr("spreadMethod", "pad");
+
+    legend.append("stop")
+      .attr("offset", "0%")
+      .attr("stop-color", function(d)
+      {
+        if(currentvis=="confirm")return "#f7fbff";
+        else if(currentvis=="recovered")return "#f7fcf5";
+      }
+      )
+      .attr("stop-opacity", 1);
+
+    legend.append("stop")
+      .attr("offset", "16.67%")
+      .attr("stop-color", function(d)
+      {
+        if(currentvis=="confirm")return "#c6dbef";
+        else if(currentvis=="recovered")return "#c7e9c0";
+      }
+      )
+      .attr("stop-opacity", 1);
+
+    legend.append("stop")
+      .attr("offset", "33.34%")
+      .attr("stop-color",
+      function(d)
+      {
+        if(currentvis=="confirm")return "#9ecae1";
+        else if(currentvis=="recovered")return "#a1d99b";
+      }
+       )
+      .attr("stop-opacity", 1);
+
+    legend.append("stop")
+      .attr("offset", "50.01%")
+      .attr("stop-color", function(d)
+      {
+        if(currentvis=="confirm")return "#6baed6";
+        else if(currentvis=="recovered")return "#74c476";
+      }
+      )
+      .attr("stop-opacity", 1);
+
+      legend.append("stop")
+      .attr("offset", "66.68%")
+      .attr("stop-color",function(d)
+      {
+        if(currentvis=="confirm")return "#4292c6";
+        else if(currentvis=="recovered")return "#41ab5d";
+      }
+       )
+      .attr("stop-opacity", 1);
+
+      legend.append("stop")
+      .attr("offset", "83.35%")
+      .attr("stop-color",function(d)
+      {
+        if(currentvis=="confirm")return "#2171b5";
+        else if(currentvis=="recovered")return '#238b45';
+      }
+       )
+      .attr("stop-opacity", 1);
+
+      legend.append("stop")
+      .attr("offset", "100%")
+      .attr("stop-color",
+      function(d)
+      {
+        if(currentvis=="confirm")return '#084594';
+        else if(currentvis=="recovered")return '#005a32';
+      } )
+      .attr("stop-opacity", 1);
+
+    key.append("rect")
+      .attr("width", w)
+      .attr("height", h - 30)
+      .style("fill", "url(#gradient)")
+      .attr("transform", "translate(10,10)");
+
+    a=[]
+    if(currentvis=="confirm")a= [Math.round((mc*.9)/1000)+"k",Math.round((mc*.09)/1000)+"k",Math.round((mc*.01)/1000)+"k",Math.round((mc*.004)/1000)+"k",Math.round((mc*.001)/1000)+"k",Math.round((mc*.0009)/1000)+"k" , 0];
+    else if(currentvis=="recovered")a= [Math.round((mc*.9)/1000)+"k",Math.round((mc*.09)/1000)+"k",Math.round((mc*.01)/1000)+"k",Math.round((mc*.004)),Math.round(mc*.001),Math.round((mc*.0009)) , 0]
+    var y = d3.scaleBand()
+      .range([300, 0])
+      .domain(a
+        );
+
+    var yAxis = d3.axisBottom()
+      .scale(y)
+
+
+    key.append("g")
+      .attr("class", "y_axis")
+      .attr("color","white")
+      .attr("transform", "translate(10,30)")
+      .call(yAxis)
+      .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 0)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("axis title");
+
+
+}
+
+else{
+  // if(d.deaths>mc*.5) return '#99000d';
+  //               else if(d.deaths>mc*.1) return '#cb181d';
+  //               else if(d.deaths>mc*.03)return "#ef3b2c";
+  //               else if(d.deaths>mc*.01)return "#fb6a4a";
+  //               else if(d.deaths>mc*.005)return '#fc9272';
+  //               else if(d.deaths>mc*.001)return "#fcbba1";
+  //               else if(d.deaths>0)return "#fcbba1";
+  //               else return "#fff5f0";  
+
+
+  var w = 300, h = 50;
+
+    d3.select("#s").remove()
+    var key = d3.select("#Map")
+      .append("svg")
+      .attr("id","s")
+      .attr("width", w)
+      .attr("height", h);
+
+    var legend = key.append("defs")
+      .append("svg:linearGradient")
+      .attr("id", "gradient")
+      .attr("x1", "0%")
+      .attr("y1", "100%")                             
+      .attr("x2", "100%")
+      .attr("y2", "100%")
+      .attr("spreadMethod", "pad");
+
+    legend.append("stop")
+      .attr("offset", "0%")
+      .attr("stop-color", "#fff5f0")
+      .attr("stop-opacity", 1);
+
+    legend.append("stop")
+      .attr("offset", "16.67%")
+      .attr("stop-color", "#fcbba1")
+      .attr("stop-opacity", 1);
+
+    legend.append("stop")
+      .attr("offset", "33.34%")
+      .attr("stop-color",'#fc9272'
+       )
+      .attr("stop-opacity", 1);
+
+    legend.append("stop")
+      .attr("offset", "50.01%")
+      .attr("stop-color", "#fb6a4a" )
+      .attr("stop-opacity", 1);
+
+      legend.append("stop")
+      .attr("offset", "66.68%")
+      .attr("stop-color","#ef3b2c"
+       )
+      .attr("stop-opacity", 1);
+
+      legend.append("stop")
+      .attr("offset", "83.35%")
+      .attr("stop-color",'#cb181d'
+       )
+      .attr("stop-opacity", 1);
+
+      legend.append("stop")
+      .attr("offset", "100%")
+      .attr("stop-color",'#99000d')
+      .attr("stop-opacity", 1);
+
+    key.append("rect")
+      .attr("width", w)
+      .attr("height", h - 30)
+      .style("fill", "url(#gradient)")
+      .attr("transform", "translate(10,10)");
+
+    var y = d3.scaleBand()
+      .range([300, 0])
+      .domain([Math.round((mc*.9)/1000)+"k",Math.round((mc*.5)/1000)+"k",Math.round((mc*.1)/1000)+"k",Math.round((mc*.03)/1000)+"k",Math.round((mc*.019)/1000)+"k",Math.round((mc*.019)/1000)+"k" , 0]);
+
+    var yAxis = d3.axisBottom()
+      .scale(y)
+
+
+    key.append("g")
+      .attr("class", "y_axis")
+      .attr("color","white")
+      .attr("transform", "translate(10,30)")
+      .call(yAxis)
+      .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 0)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("axis title");
+}
+
       
   
            
@@ -1648,7 +1898,7 @@ div.tooltip1{
           {
             i=d3.selectAll("rect")._groups[0][j];
             if(i.__data__.country==c){
-                  d3.select(i).classed("selected",false);
+                  d3.select(i).classed("selected",true);
                   break;
             }
             // else{
@@ -1693,9 +1943,10 @@ div.tooltip1{
           {
             i=d3.selectAll("rect")._groups[0][j];
             if(i.__data__.country==c){
-                  d3.select(i).classed("selected",false);
+                  d3.select(i).classed("selected",true);
                   break;
             }
+          }
 
             for(i=0;i<180;i++)
       {
@@ -1703,10 +1954,8 @@ div.tooltip1{
         if(j.__data__.country==c){
         d3.select(j).classed("selected",true);}
       }
-            // else{
-            //   d3.select(i).attr("fill","#2a5599")
-            // }
-          }
+           
+          
              
              
              break;
@@ -1756,7 +2005,7 @@ div.tooltip1{
       d=i.date;
           }
           d3.select(".tc").html(
-"<span style='font-weight:bold;font-size:1.5em;color:#2a5599'>"+cf+"</span>"+
+"<span style='font-weight:bold;font-size:1.5em;color:#2a5599'>"+cf+"</span>"+ 
 "</br>"+"Confirmed Cases"
                 
               )
@@ -1789,7 +2038,7 @@ div.tooltip1{
       d=i.date;
           }
           d3.select(".tc1").html(
-              "<span style='font-weight:bold;font-size:1.5em;color:red'>"+cf+"</span>"+
+              "<span style='font-weight:bold;font-size:1.5em;color:#cb181d'>"+cf+"</span>"+
 "</br>"+"Deaths"
               )
           
@@ -1802,7 +2051,7 @@ div.tooltip1{
       d=i.date;
           }
           d3.select(".tc1").html(
-              "<span style='font-weight:bold;font-size:1.5em;color:red'>"+cf+"</span>"+
+              "<span style='font-weight:bold;font-size:1.5em;color:#cb181d'>"+cf+"</span>"+
 "</br>"+"Deaths"
               )
           
@@ -1822,7 +2071,7 @@ div.tooltip1{
       d=i.date;
           }
           d3.select(".tc2").html(
-              "<span style='font-weight:bold;font-size:1.5em;color:green'>"+cf+"</span>"+
+              "<span style='font-weight:bold;font-size:1.5em;color:#238b45'>"+cf+"</span>"+
 "</br>"+"People Recovered"
               )
           
@@ -1835,7 +2084,7 @@ div.tooltip1{
       d=i.date;
           }
           d3.select(".tc2").html(
-              "<span style='font-weight:bold;font-size:1.5em;color:green'>"+cf+"</span>"+
+              "<span style='font-weight:bold;font-size:1.5em;color:#238b45'>"+cf+"</span>"+
 "</br>"+"People Recovered"
               )
           
@@ -1905,11 +2154,11 @@ div.tooltip1{
 
     
              
-var margin =  {top: 20, right: 10, bottom: 70, left: 50};
-var marginOverview = {top: 30, right: 10, bottom: 20, left: 40};
-var selectorHeight = 20;
+var margin =  {top: 10, right: 0, bottom: 70, left: 50};
+var marginOverview = {top: 10, right: 0, bottom: 70, left: 50};
+var selectorHeight = 15;
 var width = 450 - margin.left - margin.right;
-var height = 450 - margin.top - margin.bottom - selectorHeight;
+var height = 380 - margin.top - margin.bottom - selectorHeight;
 var heightOverview = 80 - marginOverview.top - marginOverview.bottom;
      
 var maxLength = d3.max(data.map(function(d){ return d.country.length}))
@@ -1972,7 +2221,12 @@ var bars = diagram.append("g");
 bars.selectAll("rect")
           .data(data.slice(0, numBars), function (d) {return d.country; })
           .enter().append("rect")
-          .attr("fill", "#2a5599")
+          .attr("fill", function(d)
+          {
+            if(currentvis=="confirm")return "#2a5599";
+            else if(currentvis=="death")return '#cb181d';//'#005a32''#99000d'  '#cb181d''#238b45'
+            else if(currentvis=="recovered") return '#238b45';
+          })                                         //"#2a5599"
           .attr("x", function (d) { return xscale(d.country); })
           .attr("y", function (d) { 
                               if(currentvis=="confirm")
@@ -2030,7 +2284,12 @@ bars.selectAll("rect")
               .style("top", d3.event.clientY - 28 + "px");
               })
             .on("mouseleave",function(){
-              d3.select(this).attr("fill", "#2a5599")
+              d3.select(this).attr("fill", function(d)
+          {
+            if(currentvis=="confirm")return "#2a5599";
+            else if(currentvis=="death")return '#cb181d';//'#005a32''#99000d'  '#cb181d''#238b45'
+            else if(currentvis=="recovered") return '#238b45';
+          })   
               div
               .attr("class","tooltip")
               .transition()
@@ -2247,7 +2506,12 @@ function display () {
   rects.attr("x", function (d) { return xscale(d.country); });
 
   rects.enter().append("rect")
-     .attr("fill", "#2a5599")
+  .attr("fill", function(d)
+          {
+            if(currentvis=="confirm")return "#2a5599";
+            else if(currentvis=="death")return '#cb181d';//'#005a32''#99000d' 
+            else if(currentvis=="recovered") return '#238b45';
+          })   
     .attr("x", function (d) { return xscale(d.country); })
     .attr("y", function (d) { if(currentvis=="confirm")
                               {
@@ -2302,7 +2566,12 @@ function display () {
               .style("top", d3.event.clientY - 28 + "px");
               })
             .on("mouseleave",function(){
-              d3.select(this).attr("fill", "#2a5599")
+              d3.select(this).attr("fill", function(d)
+          {
+            if(currentvis=="confirm")return "#2a5599";
+            else if(currentvis=="death")return '#cb181d';//'#005a32''#99000d'  '#cb181d''#238b45'
+            else if(currentvis=="recovered") return '#238b45';
+          })   
               div
               .attr("class","tooltip")
               .transition()
@@ -2312,6 +2581,12 @@ function display () {
           .on("click", d=>{
               //console.log(d.country);
                myScript1(d.country);
+               for ( s of store.time){
+         if( s.key == d.country){ linedata = s; break}
+       }
+      // console.log(linedata.values)
+      slidedata = linedata.values;
+       drawline(linedata.values)
              // drawline(d.country, store.coronadat)
       });
 
@@ -2334,17 +2609,6 @@ let body = d3.select("#body2")
 document.getElementById("body2").innerHTML="";
 let height = 400;
 let width = 430;
-
-function showtool(data, coord){ console.log(data)
-d3.select("#tooltip")
-.html("Price: "+data[0]+"<br> Date: "+data[1])
-.style('top', coord[1]-15+"px")
-.style("left", coord[0]+15+"px")
-.style("display", "block")
-.style("color", "blue")
-
-}
-
 data.map(d=> {
  d.date= new Date(d.date)
  d.confirmed = +d.confirmed
@@ -2369,17 +2633,82 @@ var valueline = d3.line()
 .y(d => yscale(d.confirmed))
 .defined(d => !!d.confirmed)
 
+//for tooltip
 
+          
+body.append('rect')
+    .style("fill", "none")
+    .style("pointer-events", "all")
+    .attr('width', width)
+    .attr('height', height)
+    .on('mousemove', mousemove);
+
+//tool tip
 body
 .append("path")
 .datum(data)
 .attr("fill", "none")
-.attr("stroke", "blue")
+.attr("stroke", "#2a5599")
 .attr("stroke-width", 3)
 .attr("d", valueline)
 .attr("class", "line")
+.on("mouseenter", d=>{
+			
+      showtool(1,[d3.event.clientX -180, d3.event.clientY-30])
+    })
+.on("mouseleave", d=>{
+      d3.select("#tooltip").style('display', 'none')
+    })
+  .on("mousemove", d=>{
+      showtool(1,[d3.event.clientX -180, d3.event.clientY-30])
+    })
 
 //draw line end 
+
+/// for tooltip
+
+var bisect = d3.bisector(function(d) { return d.date; }).left;
+function mousemove() {
+        // recover coordinate we need
+        var x0 = xscale.invert(d3.mouse(this)[0]);
+        var i = bisect(data, x0, 1);
+        selectedData = data[i]
+        a= selectedData
+        
+       
+        
+}
+
+function showtool(check, coord){
+ var val
+ var cas
+ if(check == 1){
+    val = a.confirmed
+    cas = "Confirmed: "
+ }
+ else if(check==2){
+    val = a.recovered
+    cas = "Recovered: "
+
+ }
+ else{
+    val = a.deaths
+    cas = "Deaths: "
+ }
+  var formatDate = d3.timeFormat("%d-%b-%y")
+
+  
+
+		d3.select("#tooltip")
+			.html(cas+val+"<br> Date: "+ formatDate(a.date))
+			.style('top', coord[1]-15+"px")
+			.style("left", coord[0]+15+"px")
+			.style("display", "block")
+			.style("color", "blue")
+			
+	}
+     
+//end tooltip
 
 //recovered case
 var valuerc = d3.line()
@@ -2391,10 +2720,20 @@ body
 .append("path")
 .datum(data)
 .attr("fill", "none")
-.attr("stroke", "green")
+.attr("stroke", '#238b45')
 .attr("stroke-width", 3)
 .attr("d", valuerc)
 .attr("class", "line")
+.on("mouseenter", d=>{
+			
+      showtool(2,[d3.event.clientX -180, d3.event.clientY-30])
+    })
+.on("mouseleave", d=>{
+      d3.select("#tooltip").style('display', 'none')
+    })
+  .on("mousemove", d=>{
+      showtool(2,[d3.event.clientX -180, d3.event.clientY-30])
+    })
 // end recov
 
 //draw deaths
@@ -2407,11 +2746,49 @@ body
 .append("path")
 .datum(data)
 .attr("fill", "none")
-.attr("stroke", "red")
+.attr("stroke", '#cb181d')
 .attr("stroke-width", 3)
 .attr("d", valuedth)
 .attr("class", "line")
+.on("mouseenter", d=>{
+			
+      showtool(3,[d3.event.clientX -180, d3.event.clientY-30])
+    })
+.on("mouseleave", d=>{
+      d3.select("#tooltip").style('display', 'none')
+    })
+  .on("mousemove", d=>{
+      showtool(3,[d3.event.clientX -180, d3.event.clientY-30])
+    })
 //end deaths
+// legend
+var columnHeaders = d3.keys(data[0]).filter(function(key) { return key !== "date"; });
+var color = d3.scaleOrdinal().range(
+  ["#2a5599" ,'#cb181d','#238b45']);
+
+  var legend = body.selectAll(".legend")
+    .data(columnHeaders.slice().reverse())
+  .enter().append("g")
+    .attr("class", "legend")
+    .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+legend.append("rect")
+    .attr("x", 105)
+    .attr("width", 18)
+    .attr("height", 18)
+    .style("fill", color);
+
+legend.append("text")
+    .attr("x", 90)
+    .attr("y", 5)
+    .attr("dy", ".35em")
+    .style("fill", color)
+    .style("text-anchor", "end")
+    .text(function(d) { return d; });
+
+//
+
+
 //console.log(data)
 
 
@@ -2443,17 +2820,19 @@ body.append('g')
       .attr("cy", function (d) { return yscale(d.deaths); } )
       .attr("r", 0)
       .style("fill", "red")//#69b3a2
-lasso()
+lasso(yscale(1))
+
 
 }
-      
+
+ 
       loadData().then(showData);
   
 //lasso here
-function lasso(){
+let a;
+function lasso(scal){
   let body = d3.select("#container")
   var circles = body.selectAll("circle")
-  //console.log(circles)
   // Lasso functions
         var lasso_start = function() {
             lasso.items()
@@ -2469,6 +2848,16 @@ function lasso(){
                 .classed("not_possible",false)
                 .classed("possible",true);
 
+                var lassod = lasso.possibleItems()._groups[0]
+                a= lassod
+                var sum=0;
+                if( lassod != null){
+                  for( x of lassod){
+                  sum += x.cy.baseVal.value
+                }
+                }
+                console.log("I am from lasso data")
+                
             
             lasso.notPossibleItems()
                 .classed("not_possible",true)
@@ -2522,7 +2911,7 @@ setTimeout(slide,100)
       max: new Date(slidedata[len-1].date).getTime() / 1000,
       step: 86400,
       values: [ new Date(slidedata[0].date).getTime() / 1000, new Date(slidedata[len-1].date).getTime() / 1000 ],
-      slide: function( event, ui ) { console.log((new Date(ui.values[ 0 ] *1000) ))
+      slide: function( event, ui ) { //console.log((new Date(ui.values[ 0 ] *1000) ))
         var d1 = new Date(ui.values[ 0 ] *1000)
         var d2 = new Date(ui.values[ 1 ] *1000)
         var d3 = new Date(slidedata[0].date).getTime()
@@ -2544,7 +2933,7 @@ setTimeout(slide,100)
  function command()
    {
      let str=document.getElementById('command').value
-     if((/^select/).test(str) && (/death cases|confirm cases|recovered cases/).test(str))
+     if((/^select/).test(str) && (/death cases|confirmed cases|recovered cases/).test(str))
      {
             if (str.includes("death cases"))
             {
