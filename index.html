@@ -3085,7 +3085,9 @@ setTimeout(slide,1000)
         total_case_print1(groupbyCountryDeath(store.death))
         total_case_print2(groupbyCountryRecovered(store.recovered))
         //d3.select(".res").style("background-color","#2a5599").text("Showing Results of Confirmed Cases for All Countries");
-            }      
+            }    
+
+            d3.select(".res").text("Showing Results for All Countries");  
         
      }
 
@@ -3158,19 +3160,19 @@ setTimeout(slide,1000)
               if(str.includes("death"))
               {
                  a=store.afterlasso.sort((a,b) => b.deaths - a.deaths);
-              console.log(a[0])
+                 d3.select(".res").text("maximum death cases occured in "+a[0].country+" among the selected countries"); 
               }
               else if(str.includes("recovered"))
               {
                  a=store.afterlasso.sort((a,b) => b.recovered - a.recovered);
-              console.log(a[0])
+                 d3.select(".res").text("maximum recovered cases occured in "+a[0].country+" among the selected countries"); 
               }
               else if(str.includes("confirmed"))
               {
                  a=store.afterlasso.sort((a,b) => b.confirmed - a.confirmed);
-              console.log(a[0])
+                 d3.select(".res").text("maximum confirmed cases occured in "+a[0].country+" among the selected countries"); 
               }
-
+              
 
               
         
@@ -3179,20 +3181,23 @@ setTimeout(slide,1000)
               if(str.includes("death"))
               {
                  a=store.done.sort((a,b) => b.deaths - a.deaths);
-              console.log(a[0])
+                 d3.select(".res").text("maximum death cases occured in "+a[0].country); 
               }
               else if(str.includes("recovered"))
               {
                  a=store.done.sort((a,b) => b.recovered - a.recovered);
-              console.log(a[0])
+                 d3.select(".res").text("maximum recovered cases occured in "+a[0].country); 
               }
               else if(str.includes("confirmed"))
               {
                  a=store.done.sort((a,b) => b.confirmed - a.confirmed);
-              console.log(a[0])
+                 d3.select(".res").text("maximum confirmed cases occured in "+a[0].country); 
               }
 
+              
             }
+            
+
           }
           else if(str.includes("minimum"))
           {
@@ -3202,19 +3207,19 @@ setTimeout(slide,1000)
               if(str.includes("death"))
               {
                  a=store.afterlasso.sort((a,b) => a.deaths - b.deaths);
-              console.log(a[0])
+                 d3.select(".res").text("minimum death cases occured in "+a[0].country+" among the selected countries");
               }
               else if(str.includes("recovered"))
               {
                a=store.afterlasso.sort((a,b) => a.recovered - b.recovered);
-              console.log(a[0])
+               d3.select(".res").text("minimum recovered cases occured in "+a[0].country+" among the selected countries");
               }
               else if(str.includes("confirmed"))
               {
                 a=store.afterlasso.sort((a,b) => a.confirmed - b.confirmed);
-              console.log(a[0])
+                d3.select(".res").text("minimum confirmed cases occured in "+a[0].country+" among the selected countries");
               }
-              
+               
         
             }
             else if(1)
@@ -3222,19 +3227,21 @@ setTimeout(slide,1000)
               if(str.includes("death"))
               {
                 a=store.done.sort((a,b) => a.deaths - b.deaths);
-              console.log(a[0])
+                d3.select(".res").text("minimum death cases occured in "+a[0].country);
               }
               else if(str.includes("recovered"))
               {
                a=store.done.sort((a,b) => a.recovered - b.recovered);
-              console.log(a[0])
+               d3.select(".res").text("minimum recovered cases occured in "+a[0].country);
               }
               else if(str.includes("confirmed"))
               {
                a=store.done.sort((a,b) => a.confirmed - b.confirmed);
-              console.log(a[0])
+               d3.select(".res").text("minimum confiremd cases occured in "+a[0].country);
               }
+              
             }
+            
           }
 
          c=a[0].country
@@ -3307,7 +3314,7 @@ setTimeout(slide,1000)
         if(i=="from" || i=="to")continue
         else d.push(i)
       }
-
+   
      d3.select(".res").text("Showing Results from "+d[0]+" to "+d[1]);  
    
       afterlasso(new Date(d[0]) ,new Date(d[1]))
