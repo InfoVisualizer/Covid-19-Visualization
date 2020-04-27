@@ -2846,9 +2846,9 @@ body
     })
 //end deaths
 // legend
-var columnHeaders = ["Confirmed", "Deaths", "Recovered"];
+var columnHeaders = ["Deaths", "Recovered", "Confirmed"];
 var color = d3.scaleOrdinal().range(
-  ["#2a5599" ,'#cb181d','#238b45']);
+  ["#2a5599" ,'#238b45','#cb181d']);
 
   var legend = body.selectAll(".legend")
     .data(columnHeaders.slice().reverse())
@@ -2954,8 +2954,8 @@ function lasso(scal, data, xscale){
             // Style the selected dots
             lasso.selectedItems()
                 .classed("selected",true)
-                .attr("r",3.5)
-                .style("fill", "blue");
+                .attr("r",2.5)
+                .style("fill", "#666600");
                 var lassod = lasso.selectedItems()._groups[0]
                 var bisect = d3.bisector(function(d) { return d.date; }).left;
                 let a = lassod;
@@ -2997,7 +2997,7 @@ function lasso(scal, data, xscale){
         
         body.call(lasso);
 }
-setTimeout(slide,1000)
+setTimeout(slide,2000)
  //end lasso
  function slide(){
    var len = slidedata.length
