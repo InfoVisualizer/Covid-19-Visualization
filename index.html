@@ -3678,7 +3678,7 @@ store.position=0
  ///command/////
  function command()
    {
-     let str=document.getElementById('command').value
+     let str=document.getElementById('command').value.toLowerCase()
      if((/^(select|show)/).test(str) && (/death cases|confirmed cases|recovered cases/).test(str))
      {
             if (str.includes("death cases"))
@@ -4562,7 +4562,7 @@ recognition.onresult = function(event) {
    }
 
    if(str.includes("sylhet"))str=str.replace("sylhet","select")
-
+   if(str.includes("so"))str=str.replace("so","show")
 
    
    
