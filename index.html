@@ -3378,6 +3378,14 @@ body.append("g")
         .ticks(15)
         .tickFormat(d3.format(".02s")));
 
+        body.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", -55)
+      .attr("x",0 - (height / 2))
+      .attr("dy", "1em")
+      .style("text-anchor", "middle")
+      .text("Cumulative Cases"); 
+
 
 let xscale = d3.scaleTime()
 .domain(d3.extent(data,d=>d.date))
