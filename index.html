@@ -331,7 +331,13 @@ div.tooltip1{
 #mybtn{
   margin-left: 32%;
   position: absolute;
+  color: #2a5599;
 }
+
+body {font-family: Arial, Helvetica, sans-serif;}
+  h4{
+    color: white;
+  }
 
       </style>
       <script src="./d3-lasso.min.js"></script>
@@ -352,34 +358,28 @@ div.tooltip1{
   <body>
       <h1>COVID-19 Dashboard</h1>
       <div id="myModal" class="modal">
-
+  
         <!-- Modal content -->
-        <div class="modal-content">
+        <div class="modal-content" style="background-color: #2a6592; color:rgb(209, 178, 178);">
           <span class="close">&times;</span>
-          <p style="color: black; font-weight: bold; font-size: 16px;">1. To select a single country<br>
-            ***select country_name<br>
-            <br>
-            2. To select multiple countries<br>
-            ***select country_name1,country_name2,..<br>
-            <br>
-            3. To choose a particular case<br>
-            ***select/show death/recovered/confirmed cases<br>
-            <br>
-            4. To find minimum/maximum death/recovered/confirmed cases<br>
-            ***find maximum/minimum death/recovered/confirmed cases<br>
-            <br>
-            5. To select a particular date range<br>
-            ***from m/d/y to m/d/y<br>
-            <br>
-            6.To find minimum/maximum death/recovered/confirmed cases among some selected countries<br>
-            *** first select some countries by using lasso/select command then use the find maximum command
-            <br><br>
-            7.To find minimum/maximum death/recovered/confirmed cases in particular date range<br>
-            *** first select a date range by using lasso/slider/from to command then use the find maximum command
-            <br><br>
-            8. To reset or clear the window<br>
-            ***cls/clear/clear all<br>
-            <br>
+          <p style="color: white; font-weight: 1em; font-size: 16px; letter-spacing: .3em; ">
+            
+            <h4>1. To select a single country.</h4> 
+              --> select "Bangladesh"
+            <h4>2. To select multiple countries.</h4>
+            --> select "China","USA",..
+            <h4>3. To choose a particular case.</h4>
+              --> select/show death/recovered/confirmed cases
+            <h4>4. To find minimum/maximum death/recovered/confirmed cases.</h4>
+              --> find maximum/minimum death/recovered/confirmed cases
+            <h4>5. To select a particular date range.</h4>
+            --> from m/d/y to m/d/y
+            <h4>6. To find minimum/maximum death/recovered/confirmed cases among some selected countries.</h4>
+            --> first select some countries by using lasso/select command then use the find maximum command
+            <h4>7. To find minimum/maximum death/recovered/confirmed cases in particular date range.</h4>
+            --> first select a date range by using lasso/slider/from to command then use the find maximum command
+            <h4>8. To reset or clear the window.</h4>
+            --> cls/clear/clear all
           
           </p>
         </div>
@@ -393,7 +393,8 @@ div.tooltip1{
         <i class="fa fa-microphone"  id="button" aria-hidden="true"></i>
         <!-- <input type="image" id="button" src="image.png" width="20" height="20"> -->
         <!-- <!-- <button onclick="command()">Enter</button> -->
-        <button id="myBtn">Supported Commands</button>
+        <i class="fa fa-question-circle fa-2x" aria-hidden="true" id="myBtn"></i>
+        <!-- <button id="myBtn">Supported Commands</button> -->
         </div>
         <div class="res" id="res">Showing Results for All Countries</div> 
 
@@ -1578,17 +1579,26 @@ else{
                 cn.push(i.__data__.country)
               }
       }
-    
-      if(lasso.selectedItems()._groups[0].length>0)
-                  {
-                    
-                  scrollbar(cn[0])
-                  }
+
+      d.sort((a,b)=>b.confirmed - a.confirmed)
+        if(lasso.selectedItems()._groups[0].length>0)
+                    {
+                      
+                    scrollbar(d[0].country)
+                    }
+        else if(lasso.selectedItems()._groups[0].length==0){
+          clearbar()
+        drawbar(store.done)
+        }    
+      
       store.currentselectedcountries=cn;
       store.afterlasso=d
+      
       total_case_print(d)
       total_case_print1(d)
       total_case_print2(d)
+
+       
 
       l= d3.selectAll("rect")._groups[0]
      for(i=0;i<205;i++)
@@ -1613,6 +1623,7 @@ console.log()
          document.getElementById('command').value=store.currentcommand;
          command();
        }
+      
               };
               
               var lasso = d3.lasso()
@@ -1752,11 +1763,16 @@ console.log()
               }
       }
 
-      if(lasso.selectedItems()._groups[0].length>0)
-                  {
-                    
-                  scrollbar(cn[0])
-                  }
+      d.sort((a,b)=>b.confirmed - a.confirmed)
+        if(lasso.selectedItems()._groups[0].length>0)
+                    {
+                      
+                    scrollbar(d[0].country)
+                    }
+        else if(lasso.selectedItems()._groups[0].length==0){
+          clearbar()
+        drawbar(store.done)
+        }  
       store.currentselectedcountries=cn;
       store.afterlasso=d
       total_case_print(d)
@@ -1915,11 +1931,16 @@ console.log()
                 cn.push(i.__data__.country)
               }
       }
-      if(lasso.selectedItems()._groups[0].length>0)
-                  {
-                    
-                  scrollbar(cn[0])
-                  }
+      d.sort((a,b)=>b.confirmed - a.confirmed)
+        if(lasso.selectedItems()._groups[0].length>0)
+                    {
+                      
+                    scrollbar(d[0].country)
+                    }
+        else if(lasso.selectedItems()._groups[0].length==0){
+          clearbar()
+          drawbar(store.done)
+        }  
       store.currentselectedcountries=cn;
       store.afterlasso=d
       total_case_print(d)
@@ -2420,6 +2441,10 @@ console.log()
         total_case_print2(groupbyCountryRecovered(store.recovered))
        // d3.select(".res").text("Showing Results of Recovered Cases for All Countries");
           }
+
+          if(currentvis=="confirm")store.done.sort((a,b) => b.confirmed - a.confirmed);
+     else if(currentvis=="death")store.done.sort((a,b) => b.deaths - a.deaths);
+     else if(currentvis=="recovered")store.done.sort((a,b) => b.recovered - a.recovered);
           
       }
 
@@ -2770,6 +2795,9 @@ diagram.append("rect")
 
 
 if(store.scroll){
+
+  console.log('akane')
+  
             var x = parseInt(d3.select('.mover').attr("x")),
       nx = x+store.position,
       w = parseInt(d3.select('.mover').attr("width")),
@@ -2794,7 +2822,7 @@ if(store.scroll){
           .attr("transform", function(d) {
               return "rotate(-90)" 
               });
-
+console.log('sekane')
   rects = bars.selectAll("rect")
     .data(new_data, function (d) {return d.country; });
 
@@ -2885,9 +2913,9 @@ if(store.scroll){
              // drawline(d.country, store.coronadat)
       });
 
+console.log('dokane')
 
-
-
+      
 
       var lasso_start = function() {
                   lasso.items() // reset size
@@ -2986,12 +3014,14 @@ if(store.scroll){
 
 
 
-
+    
 
       let l= d3.selectAll("rect")._groups[0]
       let ln=d3.selectAll("rect")._groups[0].length-6
+      
      for(i=0;i<ln;i++)
      {
+       
       
       
        if(store.currentselectedcountries.includes(l[i].__data__.country) || store.currentselectedcountries.includes(l[i].__data__.country.toLowerCase()))
@@ -3005,6 +3035,23 @@ if(store.scroll){
        else{
          d3.select(l[i]).classed("selected",false)
        }
+     }
+
+     for(i=0;i<ln;i++)
+     {
+      
+      
+       if(store.currenthighlight.toLowerCase()==l[i].__data__.country.toLowerCase())
+       {
+         
+        
+         d3.select(l[i]).classed("selected1",true)
+        break;
+
+       }
+      //  else{
+      //    d3.select(l[i]).classed("selected1",false)
+      //  }
      }
       
 
@@ -3272,7 +3319,7 @@ function  display () {
        if(store.currentselectedcountries.includes(l[i].__data__.country) || store.currentselectedcountries.includes(l[i].__data__.country.toLowerCase()))
        {
          
-        
+        console.log('rong hocce')
          d3.select(l[i]).classed("selected",true)
         
 
@@ -3280,6 +3327,22 @@ function  display () {
        else{
          d3.select(l[i]).classed("selected",false)
        }
+     }
+     for(i=0;i<ln;i++)
+     {
+      
+      
+       if(store.currenthighlight.toLowerCase()==l[i].__data__.country.toLowerCase())
+       {
+         
+        
+         d3.select(l[i]).classed("selected1",true)
+        break;
+
+       }
+      //  else{
+      //    d3.select(l[i]).classed("selected1",false)
+      //  }
      }
       
 
@@ -3674,7 +3737,7 @@ setTimeout(slide,2000)
  }
 
 store.position=0
-
+store.currenthighlight=''
  ///command/////
  function command()
    {
@@ -3741,6 +3804,9 @@ store.position=0
             }    
 
             d3.select(".res").text("Showing Results for All Countries");  
+            if(currentvis=="confirm")store.done.sort((a,b) => b.confirmed - a.confirmed);
+     else if(currentvis=="death")store.done.sort((a,b) => b.deaths - a.deaths);
+     else if(currentvis=="recovered")store.done.sort((a,b) => b.recovered - a.recovered);
         
      }
 
@@ -3847,7 +3913,6 @@ store.position=0
      else if((/^(find|show)/).test(str) && (/maximum|minimum/).test(str))
     {
       
-      d3.select(".mover").transition().duration(1000).attr("x",20);
       let a=[]
       store.currentcommand=str;
       if(str.includes("maximum"))
@@ -3997,6 +4062,10 @@ store.position=0
          d3.select(l[i]).classed("selected1",false)
        }
      }
+     store.currenthighlight=a[0].country
+     if(currentvis=="confirm")store.done.sort((a,b) => b.confirmed - a.confirmed);
+     else if(currentvis=="death")store.done.sort((a,b) => b.deaths - a.deaths);
+     else if(currentvis=="recovered")store.done.sort((a,b) => b.recovered - a.recovered);
 
                
 
@@ -4054,9 +4123,23 @@ store.position=0
         a=str.split(" ")
         a=a[1]
         a= a.split(",")
+        
+        if(a[0].toLowerCase()!="all"){
+          dp=''
+          l= d3.selectAll("rect")._groups[0]
+     for(i=0;i<205;i++)
+     {
+       if(a.includes( l[i].__data__.country.toLowerCase()))
+       {
+        dp=l[i].__data__.country
+        break;
 
-      scrollbar(a[0])
+       }
+     }
+          scrollbar(dp)
 
+        }
+//akane kaj korte hobe scrollbar after lasso line up
       
       store.currentselectedcountries=a;
       drawline(commandline(a))
@@ -4131,6 +4214,8 @@ store.position=0
       document.getElementById("countries").value="All"
    $("#countries").trigger("chosen:updated");
        store.currentcommand=null
+       store.currentselectedcountries=[]
+       store.currenthighlight=''
        let bar;
       if(currentvis=="confirm")bar= store.done.sort((a,b) => b.confirmed - a.confirmed);
         else if(currentvis=="death")bar= store.done.sort((a,b) => b.deaths - a.deaths);
@@ -4182,17 +4267,20 @@ store.position=0
    function scrollbar(data)
    {
     let k=0
-     for(i of store.done)
-     {
-       k++;
-      if( i.country.toLowerCase()==data.toLowerCase())
-      {
-        console.log(i.country)
-        console.log(k)
-        break;
-      }
-     }
-     store.position=k+k*.9
+    flag=true
+    for(i of store.done)
+       {
+         k++;
+        if( i.country.toLowerCase()==data.toLowerCase())
+        {
+          console.log(i.country)
+          console.log(k)
+          flag=false
+          break;
+        }
+       }
+      if(flag)k=0
+     store.position=k+k*.9 
      store.scroll=true
      clearbar()
      drawbar(store.done)
@@ -4560,13 +4648,13 @@ recognition.onresult = function(event) {
    {
      str=str.replace("depth","death")
    }
-
+   if(str.includes("conference"))str=str.replace("conference","confirmed")
    if(str.includes("sylhet"))str=str.replace("sylhet","select")
    if(str.includes("so"))str=str.replace("so","show")
 
    
    
-   if(str.includes("select"))
+   if(str.includes("select") && !(/death|recovered|confirmed/).test(str))
    {
      
      str=str.replace(/[ ,]+/g, ",").trim(" ")
