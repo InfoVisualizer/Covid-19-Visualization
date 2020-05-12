@@ -425,7 +425,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
                 </div>
                 <div>
                     <label for="amount">Date range:</label>
-                    <input type="text" id="amount" style="border: 0; color: blue; font-weight: bold;" size="30"/>     
+                    <input type="text" id="amount" style="border: 0; color: blue; font-weight: bold; background-color: #DCDCDC;" size="30"/>     
                   <div id="slider-range"></div>
                 </div>
       </div>
@@ -4195,7 +4195,169 @@ store.currenthighlight=''
       if(store.currentcommand!=null)
       {
         document.getElementById('command').innerHTML=store.currentcommand
-        command()
+        str=store.currentcommand
+        if((/^(find|show)/).test(str) && (/maximum|minimum/).test(str))
+    {
+      
+      let a=[]
+      store.currentcommand=str;
+      if(str.includes("maximum"))
+          {
+            if(store.afterlasso.length>0)
+            {
+              
+              if(str.includes("death"))
+              {
+                
+                 a=store.afterlasso.sort((a,b) => b.deaths - a.deaths);
+                 d3.select(".res").text("maximum death cases occured in "+a[0].country+" among the selected countries"); 
+              }
+              else if(str.includes("recovered"))
+              {
+                 a=store.afterlasso.sort((a,b) => b.recovered - a.recovered);
+                 d3.select(".res").text("maximum recovered cases occured in "+a[0].country+" among the selected countries"); 
+              }
+              else if(str.includes("confirmed"))
+              {
+                 a=store.afterlasso.sort((a,b) => b.confirmed - a.confirmed);
+                 d3.select(".res").text("maximum confirmed cases occured in "+a[0].country+" among the selected countries"); 
+              }
+              
+
+              
+        
+            }
+            else if(1){
+              console.log("thik ase")
+              if(str.includes("death"))
+              {
+                 a=store.done.sort((a,b) => b.deaths - a.deaths);
+                 d3.select(".res").text("maximum death cases occured in "+a[0].country); 
+              }
+              else if(str.includes("recovered"))
+              {
+                 a=store.done.sort((a,b) => b.recovered - a.recovered);
+                 d3.select(".res").text("maximum recovered cases occured in "+a[0].country); 
+              }
+              else if(str.includes("confirmed"))
+              {
+                 a=store.done.sort((a,b) => b.confirmed - a.confirmed);
+                 d3.select(".res").text("maximum confirmed cases occured in "+a[0].country); 
+              }
+              
+              
+            }
+            
+
+          }
+          else if(str.includes("minimum"))
+          {
+            if(store.afterlasso.length>0)
+            {
+              
+              if(str.includes("death"))
+              {
+                 a=store.afterlasso.sort((a,b) => a.deaths - b.deaths);
+                 d3.select(".res").text("minimum death cases occured in "+a[0].country+" among the selected countries");
+              }
+              else if(str.includes("recovered"))
+              {
+               a=store.afterlasso.sort((a,b) => a.recovered - b.recovered);
+               d3.select(".res").text("minimum recovered cases occured in "+a[0].country+" among the selected countries");
+              }
+              else if(str.includes("confirmed"))
+              {
+                a=store.afterlasso.sort((a,b) => a.confirmed - b.confirmed);
+                d3.select(".res").text("minimum confirmed cases occured in "+a[0].country+" among the selected countries");
+              }
+               
+        
+            }
+            else if(1)
+            {
+              if(str.includes("death"))
+              {
+                a=store.done.sort((a,b) => a.deaths - b.deaths);
+                d3.select(".res").text("minimum death cases occured in "+a[0].country);
+              }
+              else if(str.includes("recovered"))
+              {
+               a=store.done.sort((a,b) => a.recovered - b.recovered);
+               d3.select(".res").text("minimum recovered cases occured in "+a[0].country);
+              }
+              else if(str.includes("confirmed"))
+              {
+               a=store.done.sort((a,b) => a.confirmed - b.confirmed);
+               d3.select(".res").text("minimum confiremd cases occured in "+a[0].country);
+              }
+              
+            }
+            
+          }
+
+         c=a[0].country
+         ii=d3.select("#G").selectAll("circle")._groups[0];
+          for( j=0;j<=180;j++){
+            i=ii[j];
+          if(currentvis=="confirm"){
+         if(i.__data__.country==c)
+         {
+          
+           d3.select(i).transition().duration(1000).attr("r",radius(i.__data__.confirmed)+15).attr("fill","red").transition().duration(1000).attr("r",radius(i.__data__.confirmed))
+             .transition().duration(1000).attr("r",radius(i.__data__.confirmed)+15).transition().duration(1000).attr("r",radius(i.__data__.confirmed)).transition().duration(1000).attr("r",0).attr("fill","blue")
+         }
+          }
+          else if(currentvis=="death"){
+           if(i.__data__.country==c){
+       d3.select(i).transition().duration(1000).attr("r",radius(i.__data__.deaths)+10).attr("fill","red").transition().duration(1000).attr("r",radius(i.__data__.deaths))
+             .transition().duration(1000).attr("r",radius(i.__data__.deaths)+10).transition().duration(1000).attr("r",radius(i.__data__.deaths)).transition().duration(1000).attr("r",0).attr("fill","red")
+           }
+          }
+          else if(currentvis=="recovered"){
+           if(i.__data__.country==c){
+          d3.select(i).transition().duration(1000).attr("r",radius(i.__data__.recovered)+10).attr("fill","red").transition().duration(1000).attr("r",radius(i.__data__.recovered))
+             .transition().duration(1000).attr("r",radius(i.__data__.recovered)+10).transition().duration(1000).attr("r",radius(i.__data__.recovered)).transition().duration(1000).attr("r",).attr("fill","green")
+           }
+          }
+         }  
+
+          l= d3.selectAll("rect")._groups[0]
+          let ln=d3.selectAll("rect")._groups[0].length-6
+     for(i=0;i<ln;i++)
+     {
+       if(l[i].__data__.country==a[0].country)
+       {
+         d3.select(l[i]).classed("selected1",true)
+        
+
+       }
+       else{
+         d3.select(l[i]).classed("selected1",false)
+       }
+     }
+    
+
+      l= d3.select("#G").selectAll("path")._groups[0]
+     for(i=0;i<180;i++)
+     {
+       if(l[i].__data__.country==a[0].country)
+       {
+         d3.select(l[i]).classed("selected1",true)
+       }
+       else{
+         d3.select(l[i]).classed("selected1",false)
+       }
+     }
+     store.currenthighlight=a[0].country
+     if(currentvis=="confirm")store.done.sort((a,b) => b.confirmed - a.confirmed);
+     else if(currentvis=="death")store.done.sort((a,b) => b.deaths - a.deaths);
+     else if(currentvis=="recovered")store.done.sort((a,b) => b.recovered - a.recovered);
+
+               
+
+
+
+    }
       }
 
      for (i=0;i<d3.select("#container").selectAll('circle')._groups[0].length -1 ;i++)
