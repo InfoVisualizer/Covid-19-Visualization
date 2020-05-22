@@ -2173,6 +2173,13 @@ else{
 
         $("#countries").trigger("chosen:updated");
         //kisu kaj korte hobe akane
+        if(store.currentcommand!=null)
+       {
+         
+         document.getElementById('command').value=store.currentcommand;
+         command();
+         document.getElementById('command').value="";
+       }
           
       }
 
@@ -3691,6 +3698,13 @@ store.currenthighlight=''
         call_ShowResult();
         if(store.currentselectedcountries.length!=0)document.getElementById("countries").value="selected from other interactions"
         $("#countries").trigger("chosen:updated");
+        if(store.currentcommand!=null)
+       {
+         
+         document.getElementById('command').value=store.currentcommand;
+         command();
+         document.getElementById('command').value="";
+       }
         
      }
 
@@ -4176,7 +4190,7 @@ store.currenthighlight=''
    $("#countries").trigger("chosen:updated");
    store.currentselectedcountries=a;
    call_ShowResult();
-      drawline(commandline(a))
+      // drawline(commandline(a))
       
  }
 
@@ -4884,7 +4898,7 @@ function slideraftervoice(x1,x2){
          }
 
          let l1=d3.select("#G").selectAll("path")._groups[0]
-         let ln1=d3.select("#G").selectAll("path")._groups[0].length-2
+         let ln1=180
 
          for(let i=0;i<ln1;i++)
          {
@@ -4997,3 +5011,4 @@ function slideraftervoice(x1,x2){
 
       </script>
   </html>
+
