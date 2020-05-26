@@ -1594,7 +1594,13 @@ else{
      }
      else{
       document.getElementById("countries").value="All";
-      drawline(store.sumdate);
+      var dd = new Date(slidedata[0].date).getTime()
+     let st=new Date(store.currentstartingdate)
+        let en=new Date(store.currentendigndate)
+        var s = Math.abs(st-dd)/86400000
+        var e = Math.abs(en-dd)/86400000
+     if(store.currentstartingdate==null && store.currentendigndate==null)drawline(store.sumdate);
+     else drawline(slidedata.slice(s,e));
      } 
 
      $("#countries").trigger("chosen:updated");
@@ -1730,7 +1736,13 @@ else{
      }
      else{
       document.getElementById("countries").value="All";
-      drawline(store.sumdate);
+      var dd = new Date(slidedata[0].date).getTime()
+     let st=new Date(store.currentstartingdate)
+        let en=new Date(store.currentendigndate)
+        var s = Math.abs(st-dd)/86400000
+        var e = Math.abs(en-dd)/86400000
+     if(store.currentstartingdate==null && store.currentendigndate==null)drawline(store.sumdate);
+     else drawline(slidedata.slice(s,e));
      } 
 
      $("#countries").trigger("chosen:updated");
@@ -1862,7 +1874,13 @@ else{
      }
      else{
       document.getElementById("countries").value="All";
-      drawline(store.sumdate);
+      var dd = new Date(slidedata[0].date).getTime()
+     let st=new Date(store.currentstartingdate)
+        let en=new Date(store.currentendigndate)
+        var s = Math.abs(st-dd)/86400000
+        var e = Math.abs(en-dd)/86400000
+     if(store.currentstartingdate==null && store.currentendigndate==null)drawline(store.sumdate);
+     else drawline(slidedata.slice(s,e));
      } 
 
      $("#countries").trigger("chosen:updated");
@@ -1950,6 +1968,13 @@ else{
      else if(currentvis=="recovered")store.done.sort((a,b) => b.recovered - a.recovered);
      clearbar()
      drawbar(store.done)
+     var dd = new Date(slidedata[0].date).getTime()
+        let st=new Date(store.currentstartingdate)
+        let en=new Date(store.currentendigndate)
+        var s = Math.abs(st-dd)/86400000
+        var e = Math.abs(en-dd)/86400000
+     if(store.currentstartingdate==null && store.currentendigndate==null)drawline(store.sumdate);
+     else drawline(slidedata.slice(s,e));
 
          }
          call_ShowResult();
@@ -2460,7 +2485,14 @@ bars.selectAll("rect")
      if(d.length>0){afterbarlasso(lasso.selectedItems()._groups[0]);
       document.getElementById("countries").value="selected from other interactions";}
      else {document.getElementById("countries").value="All"
-       drawline(store.sumdate)}
+      var dd = new Date(slidedata[0].date).getTime()
+     let st=new Date(store.currentstartingdate)
+        let en=new Date(store.currentendigndate)
+        var s = Math.abs(st-dd)/86400000
+        var e = Math.abs(en-dd)/86400000
+     if(store.currentstartingdate==null && store.currentendigndate==null)drawline(store.sumdate);
+     else drawline(slidedata.slice(s,e));
+      }
 
        $("#countries").trigger("chosen:updated");
      if(store.currentcommand!=null)
@@ -2763,8 +2795,15 @@ if(store.scroll){
 
      if(d.length>0){afterbarlasso(lasso.selectedItems()._groups[0]);
       document.getElementById("countries").value="selected from other interactions";}
-     else {document.getElementById("countries").value="All"
-       drawline(store.sumdate)}
+      else {document.getElementById("countries").value="All"
+      var dd = new Date(slidedata[0].date).getTime()
+     let st=new Date(store.currentstartingdate)
+        let en=new Date(store.currentendigndate)
+        var s = Math.abs(st-dd)/86400000
+        var e = Math.abs(en-dd)/86400000
+     if(store.currentstartingdate==null && store.currentendigndate==null)drawline(store.sumdate);
+     else drawline(slidedata.slice(s,e));
+      }
 
        $("#countries").trigger("chosen:updated");
      if(store.currentcommand!=null)
@@ -3061,7 +3100,14 @@ function  display () {
      if(d.length>0){afterbarlasso(lasso.selectedItems()._groups[0]);
       document.getElementById("countries").value="selected from other interactions";}
      else {document.getElementById("countries").value="All"
-       drawline(store.sumdate)}
+     var dd = new Date(slidedata[0].date).getTime()
+     let st=new Date(store.currentstartingdate)
+        let en=new Date(store.currentendigndate)
+        var s = Math.abs(st-dd)/86400000
+        var e = Math.abs(en-dd)/86400000
+     if(store.currentstartingdate==null && store.currentendigndate==null)drawline(store.sumdate);
+     else drawline(slidedata.slice(s,e));
+      }
 
        $("#countries").trigger("chosen:updated");
 
@@ -3461,8 +3507,13 @@ function lasso(scal, data, xscale){
                   clearmap()
                   drawMap(prep(store.geoJSON))
                   clearbar()
-                  x1 = store.currentstartingdate
-                x2 = store.currentendigndate
+                  if(store.currentstartingdate!=null && store.currentendigndate!=null){
+                  x1 =new Date(store.currentstartingdate)
+                x2 = new Date(store.currentendigndate)}
+                else {
+                  x1=slidedata[0].date;
+                  x2=slidedata[slidedata.length -1].date;
+                }
                   total_case_print(store.done);
           total_case_print1(store.done);
           total_case_print2(store.done);
@@ -3481,6 +3532,8 @@ function lasso(scal, data, xscale){
                 .attr("r",0);
 
           //console.log(lasso.selectedItems());
+          store.currentstartingdate=x1
+          store.currentendigndate=x2
           ResultShow(store.currentselectedcountries,currentvis,x1,x2);
           slideraftervoice(x1,x2)
           if(store.currentcommand!=null)
@@ -3535,6 +3588,7 @@ setTimeout(slide,2000)
         store.currentstartingdate=stdate
         store.currentendigndate=endate
         afterlasso(d1, d2)
+        
         if(store.currentselectedcountries.length!=0)
         {
           //akane kaj kor//
@@ -4270,15 +4324,25 @@ store.afterlinelasso=[]
         end = Math.floor(end)
         var j = 0;
         //console.log(store.time)
+        // console.log(str,end)
       
         for( x of store.time){
           let c=0;
           let d=0;
           let r=0;
+
+          if(str==0){
+            c += x.values[end].confirmed
+             d += x.values[end].deaths
+             r += x.values[end].recovered
+
+          }
+          else{
           
              c += x.values[end].confirmed - x.values[str].confirmed
              d += x.values[end].deaths - x.values[str].deaths
              r += x.values[end].recovered - x.values[str].recovered
+          }
           
           a[j] = {
             "country" : x.values[0].country,
@@ -4335,6 +4399,8 @@ store.afterlinelasso=[]
                   i.date=null
               }
           }
+
+          // console.log(a)
 
           total_case_print(a);
           total_case_print1(a);
@@ -5011,5 +5077,4 @@ function slideraftervoice(x1,x2){
 
       </script>
   </html>
-
 
