@@ -336,6 +336,10 @@ div.tooltip1{
 
 }
 
+input:focus::placeholder {
+  color: transparent;
+}
+
 #search{
   position: absolute;
   margin-top: 7px;
@@ -412,7 +416,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
       <div class="result">
         
         <div>
-        <input type="text" id="command"  placeholder="Enter Command Here" class="round">
+        <input type="text" id="command"  placeholder="Enter Query Here" class="round">
         <i class="fa fa-search" id="search" aria-hidden="true" onclick="command()" ></i>
         <i class="fa fa-microphone"  id="button" aria-hidden="true"></i>
         <!-- <input type="image" id="button" src="image.png" width="20" height="20"> -->
