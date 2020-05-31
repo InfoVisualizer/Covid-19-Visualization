@@ -3607,7 +3607,7 @@ function lasso(scal, data, xscale){
           if(store.currentcommand!=null)
           {
             
-            document.getElementById("command").innerHTML=store.currentcommand
+            document.getElementById("command").value=store.currentcommand
             command()
             document.getElementById('command').value="";
           }
@@ -3667,7 +3667,7 @@ setTimeout(slide,2000)
           ResultShow(store.currentselectedcountries,currentvis,stdate,endate);
           drawline(slidedata.slice(str,end))}
         if(store.currentcommand!=null){
-          document.getElementById("command").innerHTML=store.currentcommand
+          document.getElementById("command").value=store.currentcommand
            command()
            document.getElementById('command').value="";
         }
@@ -4076,7 +4076,7 @@ store.currenthighlight=''
 
       if(store.currentcommand!=null)
       {
-        document.getElementById('command').innerHTML=store.currentcommand
+        document.getElementById('command').value=store.currentcommand
         str=store.currentcommand
         document.getElementById('command').value="";
         if((/^(find|show)/).test(str) && (/maximum|minimum/).test(str))
