@@ -4073,6 +4073,10 @@ store.currenthighlight=''
      ResultShow(store.currentselectedcountries,currentvis,d[0],d[1],store.currentcontinet);
      store.currentstartingdate=new Date(d[0])
      store.currentendigndate=new Date(d[1])
+      
+      var d3 = new Date(slidedata[0].date).getTime()
+        var s= Math.abs(new Date(d[0])-d3)/86400000
+        var e = Math.abs(new Date(d[1])-d3)/86400000
    
       afterlasso(new Date(d[0]) ,new Date(d[1]))
       if(store.currentselectedcountries.length>0)sliderafterbarlasso(s,e,store.time)
