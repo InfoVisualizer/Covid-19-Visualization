@@ -4640,7 +4640,7 @@ if(store.currentselectedcountries.length!=0)
     let c=[]
     for(let i=0;i<store.afterlasso.length;i++)
     {
-      a.push(store.afterlasso[i].country)
+      if(store.afterlasso[i]!=null)a.push(store.afterlasso[i].country)
     }
     store.afterlasso=[]
      l= d3.selectAll("rect")._groups[0]
