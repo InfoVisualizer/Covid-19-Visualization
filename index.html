@@ -3890,7 +3890,7 @@
   
   
   
-       else if((/^(find|show)/).test(str) && (/maximum|minimum/).test(str))
+       else if((/^(find|show)/).test(str) || (/maximum|minimum/).test(str))
       {
         
         let a=[]
@@ -4084,7 +4084,7 @@
           document.getElementById('command').value=store.currentcommand
           str=store.currentcommand
           document.getElementById('command').value="";
-          if((/^(find|show)/).test(str) && (/maximum|minimum/).test(str))
+          if((/^(find|show)/).test(str) || (/maximum|minimum/).test(str))
       {
         
         let a=[]
@@ -4275,7 +4275,7 @@
       
         
       }
-      else if((/^select/).test(str)&&(/asia|north america|south america|africa|oceania|antarctica|europe/).test(str))
+      else if((/^select/).test(str)||(/asia|north america|south america|africa|oceania|antarctica|europe/).test(str))
       {
            if(str.includes("asia"))
            {
@@ -4315,7 +4315,14 @@
            
       }
        
-       else if((/^select/).test(str)){
+
+
+      else if((/clear|cls|clear all/).test(str))
+       {
+          cls(); 
+       }
+
+       else if((/^select/).test(str) || 1){
           
           a= str.split(",")
           a[0]=a[0].replace("select ","")
@@ -4390,10 +4397,7 @@
     
        }
   
-       else if((/clear|cls|clear all/).test(str))
-       {
-          cls(); 
-       }
+       
        
        
      }
