@@ -495,6 +495,7 @@
         let testall
         let store={}
         let slidedata;
+        store.lowercountries=[]
         store.done=[];
         store.afterlasso=[];
         store.currentcommand=null;
@@ -1613,13 +1614,13 @@
           }    
           for(let i=0;i<cn.length;i++)cn[i]=cn[i].toLowerCase();
           cn=cn.filter(v=> v!="");
-        store.currentselectedcountries=cn;
-        store.afterlasso=d
+        if(cn.length!=0) store.currentselectedcountries=cn;
+        if(d.length!=0) store.afterlasso=d
         store.currentcontinet=null
         
-        total_case_print(d)
-        total_case_print1(d)
-        total_case_print2(d)
+        total_case_print(store.afterlasso)
+        total_case_print1(store.afterlasso)
+        total_case_print2(store.afterlasso)
   
         call_ShowResult();
   
@@ -1628,7 +1629,7 @@
         l= d3.selectAll("rect")._groups[0]
        for(i=0;i<205;i++)
        {
-         if(cn.includes(l[i].__data__.country.toLowerCase()))
+         if(store.currentselectedcountries.includes(l[i].__data__.country.toLowerCase()))
          {
           d3.select(l[i]).classed("selected1",false)
            d3.select(l[i]).classed("selected",true)
@@ -1645,14 +1646,30 @@
          aftermaplasso(d);
        }
        else{
-        document.getElementById("countries").value="All";
-        var dd = new Date(slidedata[0].date).getTime()
-       let st=new Date(store.currentstartingdate)
-          let en=new Date(store.currentendigndate)
-          var s = Math.abs(st-dd)/86400000
-          var e = Math.abs(en-dd)/86400000
-       if(store.currentstartingdate==null && store.currentendigndate==null)drawline(store.sumdate);
-       else drawline(slidedata.slice(s,e+1));
+
+
+        l= d3.select("#G").selectAll("path")._groups[0]
+     for(i=0;i<180;i++)
+     {
+       if(store.currentselectedcountries.includes(l[i].__data__.country.toLowerCase()))
+       {
+        d3.select(l[i]).classed("selected1",false)
+         d3.select(l[i]).classed("selected",true)
+       }
+       else{
+         d3.select(l[i]).classed("selected1",false)
+         d3.select(l[i]).classed("selected",false)
+       }
+     }
+
+      //   document.getElementById("countries").value="All";
+      //   var dd = new Date(slidedata[0].date).getTime()
+      //  let st=new Date(store.currentstartingdate)
+      //     let en=new Date(store.currentendigndate)
+      //     var s = Math.abs(st-dd)/86400000
+      //     var e = Math.abs(en-dd)/86400000
+      //  if(store.currentstartingdate==null && store.currentendigndate==null)drawline(store.sumdate);
+      //  else drawline(slidedata.slice(s,e+1));
        } 
   
        $("#countries").trigger("chosen:updated");
@@ -1761,19 +1778,22 @@
           }  
           for(let i=0;i<cn.length;i++)cn[i]=cn[i].toLowerCase();
           cn=cn.filter(v=> v!="");
-        store.currentselectedcountries=cn;
-        store.afterlasso=d
+          if(cn.length!=0) store.currentselectedcountries=cn;
+        if(d.length!=0) store.afterlasso=d
         store.currentcontinet=null
-        total_case_print(d)
-        total_case_print1(d)
-        total_case_print2(d)
+        
+        total_case_print(store.afterlasso)
+        total_case_print1(store.afterlasso)
+        total_case_print2(store.afterlasso)
   
         call_ShowResult();
+  
+         
   
         l= d3.selectAll("rect")._groups[0]
        for(i=0;i<205;i++)
        {
-         if(cn.includes(l[i].__data__.country.toLowerCase()))
+         if(store.currentselectedcountries.includes(l[i].__data__.country.toLowerCase()))
          {
           d3.select(l[i]).classed("selected1",false)
            d3.select(l[i]).classed("selected",true)
@@ -1784,20 +1804,37 @@
          }
        }
   
+       
        if(d.length>0){
         document.getElementById("countries").value="selected from other interactions";
          aftermaplasso(d);
        }
        else{
-        document.getElementById("countries").value="All";
-        var dd = new Date(slidedata[0].date).getTime()
-       let st=new Date(store.currentstartingdate)
-          let en=new Date(store.currentendigndate)
-          var s = Math.abs(st-dd)/86400000
-          var e = Math.abs(en-dd)/86400000
-       if(store.currentstartingdate==null && store.currentendigndate==null)drawline(store.sumdate);
-       else drawline(slidedata.slice(s,e+1));
-       } 
+
+
+        l= d3.select("#G").selectAll("path")._groups[0]
+     for(i=0;i<180;i++)
+     {
+       if(store.currentselectedcountries.includes(l[i].__data__.country.toLowerCase()))
+       {
+        d3.select(l[i]).classed("selected1",false)
+         d3.select(l[i]).classed("selected",true)
+       }
+       else{
+         d3.select(l[i]).classed("selected1",false)
+         d3.select(l[i]).classed("selected",false)
+       }
+     }
+
+      //   document.getElementById("countries").value="All";
+      //   var dd = new Date(slidedata[0].date).getTime()
+      //  let st=new Date(store.currentstartingdate)
+      //     let en=new Date(store.currentendigndate)
+      //     var s = Math.abs(st-dd)/86400000
+      //     var e = Math.abs(en-dd)/86400000
+      //  if(store.currentstartingdate==null && store.currentendigndate==null)drawline(store.sumdate);
+      //  else drawline(slidedata.slice(s,e+1));
+       }  
   
        $("#countries").trigger("chosen:updated");
   
@@ -1901,19 +1938,22 @@
           }  
           for(let i=0;i<cn.length;i++)cn[i]=cn[i].toLowerCase();
           cn=cn.filter(v=> v!="");
-        store.currentselectedcountries=cn;
-        store.afterlasso=d
+          if(cn.length!=0) store.currentselectedcountries=cn;
+        if(d.length!=0) store.afterlasso=d
         store.currentcontinet=null
-        total_case_print(d)
-        total_case_print1(d)
-        total_case_print2(d)
+        
+        total_case_print(store.afterlasso)
+        total_case_print1(store.afterlasso)
+        total_case_print2(store.afterlasso)
   
         call_ShowResult();
+  
+         
   
         l= d3.selectAll("rect")._groups[0]
        for(i=0;i<205;i++)
        {
-         if(cn.includes(l[i].__data__.country.toLowerCase()))
+         if(store.currentselectedcountries.includes(l[i].__data__.country.toLowerCase()))
          {
           d3.select(l[i]).classed("selected1",false)
            d3.select(l[i]).classed("selected",true)
@@ -1924,19 +1964,36 @@
          }
        }
   
+       
        if(d.length>0){
         document.getElementById("countries").value="selected from other interactions";
          aftermaplasso(d);
        }
        else{
-        document.getElementById("countries").value="All";
-        var dd = new Date(slidedata[0].date).getTime()
-       let st=new Date(store.currentstartingdate)
-          let en=new Date(store.currentendigndate)
-          var s = Math.abs(st-dd)/86400000
-          var e = Math.abs(en-dd)/86400000
-       if(store.currentstartingdate==null && store.currentendigndate==null)drawline(store.sumdate);
-       else drawline(slidedata.slice(s,e+1));
+
+
+        l= d3.select("#G").selectAll("path")._groups[0]
+     for(i=0;i<180;i++)
+     {
+       if(store.currentselectedcountries.includes(l[i].__data__.country.toLowerCase()))
+       {
+        d3.select(l[i]).classed("selected1",false)
+         d3.select(l[i]).classed("selected",true)
+       }
+       else{
+         d3.select(l[i]).classed("selected1",false)
+         d3.select(l[i]).classed("selected",false)
+       }
+     }
+
+      //   document.getElementById("countries").value="All";
+      //   var dd = new Date(slidedata[0].date).getTime()
+      //  let st=new Date(store.currentstartingdate)
+      //     let en=new Date(store.currentendigndate)
+      //     var s = Math.abs(st-dd)/86400000
+      //     var e = Math.abs(en-dd)/86400000
+      //  if(store.currentstartingdate==null && store.currentendigndate==null)drawline(store.sumdate);
+      //  else drawline(slidedata.slice(s,e+1));
        } 
   
        $("#countries").trigger("chosen:updated");
@@ -1976,10 +2033,12 @@
           
         ];
         
+        
         for(i of data1)
         {
           
           countries.push(i.country);
+          store.lowercountries.push(i.country.toLowerCase())
         }
        countries= countries.sort()
        countries.unshift("All")
@@ -2531,13 +2590,14 @@
         }
   
         for(let i=0;i<cn.length;i++)cn[i]=cn[i].toLowerCase();
-        store.currentselectedcountries=cn;
-        total_case_print(d)
-        total_case_print1(d)
-        total_case_print2(d)
+        if(cn.length!=0)store.currentselectedcountries=cn;
+        if(d.length!=0)store.afterlasso=d
+        total_case_print(store.afterlasso)
+        total_case_print1(store.afterlasso)
+        total_case_print2(store.afterlasso)
   
   
-        store.afterlasso=d
+        
         store.currentcontinet=null
   
         call_ShowResult();
@@ -2545,7 +2605,7 @@
        l= d3.select("#G").selectAll("path")._groups[0]
        for(i=0;i<180;i++)
        {
-         if(cn.includes(l[i].__data__.country.toLowerCase()))
+         if(store.currentselectedcountries.includes(l[i].__data__.country.toLowerCase()))
          {
           d3.select(l[i]).classed("selected1",false)
            d3.select(l[i]).classed("selected",true)
@@ -2559,14 +2619,29 @@
   
        if(d.length>0){afterbarlasso(lasso.selectedItems()._groups[0]);
         document.getElementById("countries").value="selected from other interactions";}
-       else {document.getElementById("countries").value="All"
-        var dd = new Date(slidedata[0].date).getTime()
-       let st=new Date(store.currentstartingdate)
-          let en=new Date(store.currentendigndate)
-          var s = Math.abs(st-dd)/86400000
-          var e = Math.abs(en-dd)/86400000
-       if(store.currentstartingdate==null && store.currentendigndate==null)drawline(store.sumdate);
-       else drawline(slidedata.slice(s,e+1));
+       else {
+
+       l= d3.selectAll("rect")._groups[0]
+     for(i=0;i<205;i++)
+     {
+       if(store.currentselectedcountries.includes(l[i].__data__.country.toLowerCase()))
+       {
+        d3.select(l[i]).classed("selected1",false)
+         d3.select(l[i]).classed("selected",true)
+       }
+       else{
+        d3.select(l[i]).classed("selected1",false)
+         d3.select(l[i]).classed("selected",false)
+       }
+     }
+
+      //   var dd = new Date(slidedata[0].date).getTime()
+      //  let st=new Date(store.currentstartingdate)
+      //     let en=new Date(store.currentendigndate)
+      //     var s = Math.abs(st-dd)/86400000
+      //     var e = Math.abs(en-dd)/86400000
+      //  if(store.currentstartingdate==null && store.currentendigndate==null)drawline(store.sumdate);
+      //  else drawline(slidedata.slice(s,e+1));
         }
   
          $("#countries").trigger("chosen:updated");
@@ -2843,12 +2918,14 @@
                 }
         }
         for(let i=0;i<cn.length;i++)cn[i]=cn[i].toLowerCase();
-        store.currentselectedcountries=cn;
-        total_case_print(d)
-        total_case_print1(d)
-        total_case_print2(d)
+        if(cn.length!=0)store.currentselectedcountries=cn;
+        if(d.length!=0)store.afterlasso=d
+        total_case_print(store.afterlasso)
+        total_case_print1(store.afterlasso)
+        total_case_print2(store.afterlasso)
   
-        store.afterlasso=d
+  
+        
         store.currentcontinet=null
   
         call_ShowResult();
@@ -2856,7 +2933,7 @@
        l= d3.select("#G").selectAll("path")._groups[0]
        for(i=0;i<180;i++)
        {
-         if(cn.includes(l[i].__data__.country.toLowerCase()))
+         if(store.currentselectedcountries.includes(l[i].__data__.country.toLowerCase()))
          {
           d3.select(l[i]).classed("selected1",false)
            d3.select(l[i]).classed("selected",true)
@@ -2866,17 +2943,33 @@
            d3.select(l[i]).classed("selected",false)
          }
        }
+       
   
        if(d.length>0){afterbarlasso(lasso.selectedItems()._groups[0]);
         document.getElementById("countries").value="selected from other interactions";}
-        else {document.getElementById("countries").value="All"
-        var dd = new Date(slidedata[0].date).getTime()
-       let st=new Date(store.currentstartingdate)
-          let en=new Date(store.currentendigndate)
-          var s = Math.abs(st-dd)/86400000
-          var e = Math.abs(en-dd)/86400000
-       if(store.currentstartingdate==null && store.currentendigndate==null)drawline(store.sumdate);
-       else drawline(slidedata.slice(s,e+1));
+       else {
+
+       l= d3.selectAll("rect")._groups[0]
+     for(i=0;i<205;i++)
+     {
+       if(store.currentselectedcountries.includes(l[i].__data__.country.toLowerCase()))
+       {
+        d3.select(l[i]).classed("selected1",false)
+         d3.select(l[i]).classed("selected",true)
+       }
+       else{
+        d3.select(l[i]).classed("selected1",false)
+         d3.select(l[i]).classed("selected",false)
+       }
+     }
+
+      //   var dd = new Date(slidedata[0].date).getTime()
+      //  let st=new Date(store.currentstartingdate)
+      //     let en=new Date(store.currentendigndate)
+      //     var s = Math.abs(st-dd)/86400000
+      //     var e = Math.abs(en-dd)/86400000
+      //  if(store.currentstartingdate==null && store.currentendigndate==null)drawline(store.sumdate);
+      //  else drawline(slidedata.slice(s,e+1));
         }
   
          $("#countries").trigger("chosen:updated");
@@ -3145,13 +3238,14 @@
                 }
         }
         for(let i=0;i<cn.length;i++)cn[i]=cn[i].toLowerCase();
-        store.currentselectedcountries=cn;
-        total_case_print(d)
-        total_case_print1(d)
-        total_case_print2(d)
+        if(cn.length!=0)store.currentselectedcountries=cn;
+        if(d.length!=0)store.afterlasso=d
+        total_case_print(store.afterlasso)
+        total_case_print1(store.afterlasso)
+        total_case_print2(store.afterlasso)
   
   
-        store.afterlasso=d
+        
         store.currentcontinet=null
   
         call_ShowResult();
@@ -3159,7 +3253,7 @@
        l= d3.select("#G").selectAll("path")._groups[0]
        for(i=0;i<180;i++)
        {
-         if(cn.includes(l[i].__data__.country.toLowerCase()))
+         if(store.currentselectedcountries.includes(l[i].__data__.country.toLowerCase()))
          {
           d3.select(l[i]).classed("selected1",false)
            d3.select(l[i]).classed("selected",true)
@@ -3169,17 +3263,33 @@
            d3.select(l[i]).classed("selected",false)
          }
        }
+       
   
        if(d.length>0){afterbarlasso(lasso.selectedItems()._groups[0]);
         document.getElementById("countries").value="selected from other interactions";}
-       else {document.getElementById("countries").value="All"
-       var dd = new Date(slidedata[0].date).getTime()
-       let st=new Date(store.currentstartingdate)
-          let en=new Date(store.currentendigndate)
-          var s = Math.abs(st-dd)/86400000
-          var e = Math.abs(en-dd)/86400000
-       if(store.currentstartingdate==null && store.currentendigndate==null)drawline(store.sumdate);
-       else drawline(slidedata.slice(s,e+1));
+       else {
+
+       l= d3.selectAll("rect")._groups[0]
+     for(i=0;i<205;i++)
+     {
+       if(store.currentselectedcountries.includes(l[i].__data__.country.toLowerCase()))
+       {
+        d3.select(l[i]).classed("selected1",false)
+         d3.select(l[i]).classed("selected",true)
+       }
+       else{
+        d3.select(l[i]).classed("selected1",false)
+         d3.select(l[i]).classed("selected",false)
+       }
+     }
+
+      //   var dd = new Date(slidedata[0].date).getTime()
+      //  let st=new Date(store.currentstartingdate)
+      //     let en=new Date(store.currentendigndate)
+      //     var s = Math.abs(st-dd)/86400000
+      //     var e = Math.abs(en-dd)/86400000
+      //  if(store.currentstartingdate==null && store.currentendigndate==null)drawline(store.sumdate);
+      //  else drawline(slidedata.slice(s,e+1));
         }
   
          $("#countries").trigger("chosen:updated");
@@ -3614,30 +3724,30 @@
                   var formatDate = d3.timeFormat("%d/%b/%y")
                   d3.select(".res").text("Showing Results from "+formatDate(x1)+" to "+formatDate(x2));
                   }
-                  if(!a.length){
-                    clearmap()
-                    drawMap(prep(store.geoJSON))
-                    clearbar()
-                    if(store.currentstartingdate!=null && store.currentendigndate!=null){
-                    x1 =new Date(store.currentstartingdate)
-                  x2 = new Date(store.currentendigndate)}
-                  else {
-                    x1=slidedata[0].date;
-                    x2=slidedata[slidedata.length -1].date;
-                  }
-                    total_case_print(store.done);
-            total_case_print1(store.done);
-            total_case_print2(store.done);
+            //       if(!a.length){
+            //         clearmap()
+            //         drawMap(prep(store.geoJSON))
+            //         clearbar()
+            //         if(store.currentstartingdate!=null && store.currentendigndate!=null){
+            //         x1 =new Date(store.currentstartingdate)
+            //       x2 = new Date(store.currentendigndate)}
+            //       else {
+            //         x1=slidedata[0].date;
+            //         x2=slidedata[slidedata.length -1].date;
+            //       }
+            //         total_case_print(store.done);
+            // total_case_print1(store.done);
+            // total_case_print2(store.done);
                     
-                    d3.select(".res").text("Showing Results for All Countries");
-                    if(currentvis=="confirmed")drawbar(store.done.sort((a,b)=>b.confirmed - a.confirmed));
-                    else if(currentvis=="death")drawbar(store.done.sort((a,b)=>b.deaths - a.deaths));
-                    else if(currentvis=="recovered")drawbar(store.done.sort((a,b)=>b.recovered - a.recovered));
-                    if(currentvis=="confirmed")drawCircles(store.done,"blue");
-                    else if(currentvis=="death")drawCirclesdeath(store.done,"red")
-                    else if(currentvis=="recovered")drawCirclesRecovered(store.done,"red")
+            //         d3.select(".res").text("Showing Results for All Countries");
+            //         if(currentvis=="confirmed")drawbar(store.done.sort((a,b)=>b.confirmed - a.confirmed));
+            //         else if(currentvis=="death")drawbar(store.done.sort((a,b)=>b.deaths - a.deaths));
+            //         else if(currentvis=="recovered")drawbar(store.done.sort((a,b)=>b.recovered - a.recovered));
+            //         if(currentvis=="confirmed")drawCircles(store.done,"blue");
+            //         else if(currentvis=="death")drawCirclesdeath(store.done,"red")
+            //         else if(currentvis=="recovered")drawCirclesRecovered(store.done,"red")
   
-                  }
+            //       }
               // Reset the style of the not selected dots
               lasso.notSelectedItems()
                   .attr("r",3)
@@ -4312,6 +4422,13 @@
              continent_postprocessing("africa")
            }
            call_ShowResult()
+           if(store.currentcommand!=null)
+         {
+           
+           document.getElementById('command').value=store.currentcommand;
+           command();
+           document.getElementById('command').value="";
+         }
            
       }
        
@@ -4333,7 +4450,7 @@
             a[i]=a[i].trim()
             if(a[i]=="uk")a[i]="united kingdom"
           }
-          
+          // console.log(a)
           
           if(a[0].toLowerCase()!="all"){
             dp=''
@@ -4380,18 +4497,28 @@
      $("#countries").trigger("chosen:updated");
      clearbar()
      drawbar(store.done)
+     highlight_show_top_result_call_command();
    }
    else{ 
+     let ck=true;
+     for(i of a)
+     {
+       if(!store.lowercountries.includes(i.toLowerCase()))ck=false
+      
+     }
+
     
+  if(ck){
    document.getElementById("countries").value="selected from other interactions"
      $("#countries").trigger("chosen:updated");
      store.currentselectedcountries=a;
      call_ShowResult();
         // drawline(commandline(a))
-        
+        highlight_show_top_result_call_command();
+   }
    }
   
-       highlight_show_top_result_call_command();
+      
         
   
     
