@@ -210,6 +210,7 @@
     fill-opacity: 1;
     stroke: black;
     stroke-width: 1.5;
+    opacity: 1;
   }
   
   .selected1 {
@@ -3712,6 +3713,7 @@
                   .classed("selected",true)
                   .attr("r",3)
                   .attr("opacity",1)
+                  console.log(fcircle)
                   // .style("fill", "yellow");
                   var lassod = fcircle._groups[0]
                   var bisect = d3.bisector(function(d) { return d.date; }).left;
@@ -3724,17 +3726,40 @@
                   var formatDate = d3.timeFormat("%d/%b/%y")
                   d3.select(".res").text("Showing Results from "+formatDate(x1)+" to "+formatDate(x2));
                   }
-            //       if(!a.length){
-            //         clearmap()
-            //         drawMap(prep(store.geoJSON))
-            //         clearbar()
-            //         if(store.currentstartingdate!=null && store.currentendigndate!=null){
-            //         x1 =new Date(store.currentstartingdate)
-            //       x2 = new Date(store.currentendigndate)}
-            //       else {
-            //         x1=slidedata[0].date;
-            //         x2=slidedata[slidedata.length -1].date;
-            //       }
+                  if(!a.length){
+                    // clearmap()
+                    // drawMap(prep(store.geoJSON))
+                    // clearbar()
+                    if(store.currentstartingdate!=null && store.currentendigndate!=null){
+                    x1 =new Date(store.currentstartingdate)
+                  x2 = new Date(store.currentendigndate)}
+                  else {
+                    x1=slidedata[0].date;
+                    x2=slidedata[slidedata.length -1].date;
+                  }
+
+                  let lne=d3.select("#container").selectAll("circle")._groups[0]
+                  let ln=d3.select("#container").selectAll("circle")._groups[0].length
+
+                  for(i of lne)
+                  {
+                    if(i.getAttribute("case") == currentvis && i.__data__.date>=x1-1 && i.__data__.date<=x2)
+                    {
+                      // console.log(i)
+
+                      d3.select(i)
+                  .classed("selected",true)
+                  .attr("r",3)
+                  
+       
+                  
+
+                  // i.getAttribute("opacity")=1
+
+                      
+                    }
+
+                  }
             //         total_case_print(store.done);
             // total_case_print1(store.done);
             // total_case_print2(store.done);
@@ -3747,7 +3772,7 @@
             //         else if(currentvis=="death")drawCirclesdeath(store.done,"red")
             //         else if(currentvis=="recovered")drawCirclesRecovered(store.done,"red")
   
-            //       }
+                  }
               // Reset the style of the not selected dots
               lasso.notSelectedItems()
                   .attr("r",3)
