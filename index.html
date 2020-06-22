@@ -94,8 +94,8 @@
     border-right:1px dotted #BDBDBD;
   }
   div.res{
-    height: 40px;
-    width: 700px;
+    height: 20px;
+    width: 100%;
     text-align: left;
     color: #616771;
     padding: 0 1em;
@@ -108,7 +108,7 @@
   }
   div.res1{
     height: 30px;
-    width: 700px;
+    width: 100%;
     text-align: left;
     color:#616771;
     padding: 0 1em;
@@ -1680,7 +1680,7 @@
            
            document.getElementById('command').value=store.currentcommand;
            command();
-           document.getElementById('command').value="";
+          //  document.getElementById('command').value="";
          }
         
                 };
@@ -1844,7 +1844,7 @@
            
            document.getElementById('command').value=store.currentcommand;
            command();
-           document.getElementById('command').value="";
+          //  document.getElementById('command').value="";
          }
                 };
                 
@@ -2004,7 +2004,7 @@
            
            document.getElementById('command').value=store.currentcommand;
            command();
-           document.getElementById('command').value="";
+          //  document.getElementById('command').value="";
          }
         
                 };
@@ -2332,7 +2332,7 @@
            
            document.getElementById('command').value=store.currentcommand;
            command();
-           document.getElementById('command').value="";
+          //  document.getElementById('command').value="";
          }
             
         }
@@ -2650,7 +2650,7 @@
          {
            document.getElementById('command').value=store.currentcommand;
            command();
-           document.getElementById('command').value="";
+          //  document.getElementById('command').value="";
          }
   
                 };
@@ -2979,7 +2979,7 @@
           
            document.getElementById('command').value=store.currentcommand;
            command();
-           document.getElementById('command').value="";
+          //  document.getElementById('command').value="";
          }
   
                 };
@@ -3297,10 +3297,10 @@
   
        if(store.currentcommand!=null)
          {
-           console.log("asci")
+          //  console.log("asci")
            document.getElementById('command').value=store.currentcommand;
            command();
-           document.getElementById('command').value="";
+          //  document.getElementById('command').value="";
          }
   
                 };
@@ -3725,6 +3725,7 @@
                   afterlasso(x1,x2)
                   var formatDate = d3.timeFormat("%d/%b/%y")
                   d3.select(".res").text("Showing Results from "+formatDate(x1)+" to "+formatDate(x2));
+                  
                   }
                   if(!a.length){
                     // clearmap()
@@ -3788,7 +3789,7 @@
               
               document.getElementById("command").value=store.currentcommand
               command()
-              document.getElementById('command').value="";
+              // document.getElementById('command').value="";
             }
             
   
@@ -3848,7 +3849,7 @@
           if(store.currentcommand!=null){
             document.getElementById("command").value=store.currentcommand
              command()
-             document.getElementById('command').value="";
+            //  document.getElementById('command').value="";
           }
           
           $( "#amount" ).val( (new Date(ui.values[ 0 ] *1000).toDateString() ) + " - " + (new Date(ui.values[ 1 ] *1000)).toDateString() );
@@ -3927,8 +3928,176 @@
    function command()
      {
        let str=document.getElementById('command').value.toLowerCase()
-       document.getElementById('command').value="";
-       if((/^(select|show)/).test(str) && (/death cases|confirmed cases|recovered cases|fatal cases/).test(str))
+      //  document.getElementById('command').value="";
+
+
+
+       if((/^(find|show)/).test(str) || (/maximum|minimum/).test(str))
+      {
+        
+        let a=[]
+        store.currentcommand=str;
+        if(str.includes("maximum"))
+            {
+              if(store.afterlasso.length>0)
+              {
+                
+                if(str.includes("death") || str.includes("fatal"))
+                {
+                  
+                   a=store.afterlasso.sort((a,b) => b.deaths - a.deaths);
+                   d3.select(".res1").html("Maximum death cases occured in "+ "<span style='font-weight:bold;'>" + capitalizeFirstLetter(a[0].country) +"</span>"+" among the selected countries"); 
+                }
+                else if(str.includes("recovered"))
+                {
+                   a=store.afterlasso.sort((a,b) => b.recovered - a.recovered);
+                   d3.select(".res1").html("Maximum recovered cases occured in "+ "<span style='font-weight:bold;'>" + capitalizeFirstLetter(a[0].country) +"</span>"+" among the selected countries"); 
+                }
+                else if(str.includes("confirmed"))
+                {
+                   a=store.afterlasso.sort((a,b) => b.confirmed - a.confirmed);
+                   d3.select(".res1").html("Maximum confirmed cases occured in "+ "<span style='font-weight:bold;'>" + capitalizeFirstLetter(a[0].country) +"</span>"+" among the selected countries"); 
+                }
+                
+  
+                
+          
+              }
+              else if(1){
+                if(str.includes("death") || str.includes("fatal"))
+                {
+                   a=store.done.sort((a,b) => b.deaths - a.deaths);
+                   d3.select(".res1").html("Maximum death cases occured in "+ "<span style='font-weight:bold;'>" + capitalizeFirstLetter(a[0].country) +"</span>"); 
+                }
+                else if(str.includes("recovered"))
+                {
+                   a=store.done.sort((a,b) => b.recovered - a.recovered);
+                   d3.select(".res1").html("Maximum recovered cases occured in "+ "<span style='font-weight:bold;'>" + capitalizeFirstLetter(a[0].country) +"</span>"); 
+                }
+                else if(str.includes("confirmed"))
+                {
+                   a=store.done.sort((a,b) => b.confirmed - a.confirmed);
+                   d3.select(".res1").html("Maximum confirmed cases occured in "+ "<span style='font-weight:bold;'>" + capitalizeFirstLetter(a[0].country) +"</span>"); 
+                }
+                
+                
+              }
+              
+  
+            }
+            else if(str.includes("minimum"))
+            {
+              if(store.afterlasso.length>0)
+              {
+                
+                if(str.includes("death")|| str.includes("fatal"))
+                {
+                   a=store.afterlasso.sort((a,b) => a.deaths - b.deaths);
+                   d3.select(".res1").html("Minimum death cases occured in "+ "<span style='font-weight:bold;'>" + capitalizeFirstLetter(a[0].country) +"</span>"+" among the selected countries");
+                }
+                else if(str.includes("recovered"))
+                {
+                 a=store.afterlasso.sort((a,b) => a.recovered - b.recovered);
+                 d3.select(".res1").html("Minimum recovered cases occured in "+ "<span style='font-weight:bold;'>" + capitalizeFirstLetter(a[0].country) +"</span>"+" among the selected countries");
+                }
+                else if(str.includes("confirmed")|| str.includes("fatal"))
+                {
+                  a=store.afterlasso.sort((a,b) => a.confirmed - b.confirmed);
+                  d3.select(".res1").html("Minimum confirmed cases occured in "+ "<span style='font-weight:bold;'>" + capitalizeFirstLetter(a[0].country) +"</span>"+" among the selected countries");
+                }
+                 
+          
+              }
+              else if(1)
+              {
+                if(str.includes("death")|| str.includes("fatal"))
+                {
+                  a=store.done.sort((a,b) => a.deaths - b.deaths);
+                  d3.select(".res1").html("Minimum death cases occured in "+ "<span style='font-weight:bold;'>" + capitalizeFirstLetter(a[0].country) +"</span>");
+                }
+                else if(str.includes("recovered"))
+                {
+                 a=store.done.sort((a,b) => a.recovered - b.recovered);
+                 d3.select(".res1").html("Minimum recovered cases occured in "+ "<span style='font-weight:bold;'>" + capitalizeFirstLetter(a[0].country) +"</span>");
+                }
+                else if(str.includes("confirmed"))
+                {
+                 a=store.done.sort((a,b) => a.confirmed - b.confirmed);
+                 d3.select(".res1").html("Minimum confiremd cases occured in "+ "<span style='font-weight:bold;'>" + capitalizeFirstLetter(a[0].country) +"</span>");
+                }
+                
+              }
+              
+            }
+  
+           c=a[0].country
+           ii=d3.select("#G").selectAll("circle")._groups[0];
+            for( j=0;j<=180;j++){
+              i=ii[j];
+            if(currentvis=="confirmed"){
+           if(i.__data__.country==c)
+           {
+            
+             d3.select(i).attr("fill","yellow").transition().duration(1000).attr("r",radius(i.__data__.confirmed)+10).attr("fill","yellow").transition().duration(1000).attr("r",radius(i.__data__.confirmed))
+               .transition().duration(1000).attr("r",radius(i.__data__.confirmed)+10).attr("fill","purple").transition().duration(1000).attr("r",radius(i.__data__.confirmed)).transition().duration(1000).attr("r",0).attr("fill","purple")
+           }
+            }
+            else if(currentvis=="death"){
+             if(i.__data__.country==c){
+         d3.select(i).attr("fill","yellow").transition().duration(1000).attr("r",radius(i.__data__.deaths)+10).transition().duration(1000).attr("r",radius(i.__data__.deaths))
+               .transition().duration(1000).attr("r",radius(i.__data__.deaths)+10).attr("fill","purple").transition().duration(1000).attr("fill","purple").attr("r",radius(i.__data__.deaths)).transition().duration(1000).attr("r",0).attr("fill","purple")
+             }
+            }
+            else if(currentvis=="recovered"){
+             if(i.__data__.country==c){
+            d3.select(i).attr("fill","yellow").transition().duration(1000).attr("r",radius(i.__data__.recovered)+10).transition().duration(1000).attr("r",radius(i.__data__.recovered))
+               .transition().duration(1000).attr("r",radius(i.__data__.recovered)+10).attr("fill","purple").transition().duration(1000).attr("r",radius(i.__data__.recovered)).transition().duration(1000).attr("r",).attr("fill","purple")
+             }
+            }
+           }  
+  
+            l= d3.selectAll("rect")._groups[0]
+            let ln=d3.selectAll("rect")._groups[0].length-6
+       for(i=0;i<ln;i++)
+       {
+         if(l[i].__data__.country==a[0].country)
+         {
+           d3.select(l[i]).classed("selected1",true)
+          
+  
+         }
+         else{
+           d3.select(l[i]).classed("selected1",false)
+         }
+       }
+      
+  
+        l= d3.select("#G").selectAll("path")._groups[0]
+       for(i=0;i<180;i++)
+       {
+         if(l[i].__data__.country==a[0].country)
+         {
+           d3.select(l[i]).classed("selected1",true)
+         }
+         else{
+           d3.select(l[i]).classed("selected1",false)
+         }
+       }
+       store.currenthighlight=a[0].country
+       if(currentvis=="confirmed")store.done.sort((a,b) => b.confirmed - a.confirmed);
+       else if(currentvis=="death")store.done.sort((a,b) => b.deaths - a.deaths);
+       else if(currentvis=="recovered")store.done.sort((a,b) => b.recovered - a.recovered);
+  
+                 
+  
+  
+  
+      }
+
+
+
+
+       else if((/^(select|show)/).test(str) || (/death cases|confirmed cases|recovered cases|fatal cases/).test(str))
        {
         if(str.includes("death cases") || str.includes("fatal cases")){
               currentvis="death";
@@ -4018,174 +4187,14 @@
            
            document.getElementById('command').value=store.currentcommand;
            command();
-           document.getElementById('command').value="";
+          //  document.getElementById('command').value="";
          }
           
        }
   
   
   
-       else if((/^(find|show)/).test(str) || (/maximum|minimum/).test(str))
-      {
-        
-        let a=[]
-        store.currentcommand=str;
-        if(str.includes("maximum"))
-            {
-              if(store.afterlasso.length>0)
-              {
-                
-                if(str.includes("death") || str.includes("fatal"))
-                {
-                  
-                   a=store.afterlasso.sort((a,b) => b.deaths - a.deaths);
-                   d3.select(".res1").text("Maximum death cases occured in "+ capitalizeFirstLetter(a[0].country)+" among the selected countries"); 
-                }
-                else if(str.includes("recovered"))
-                {
-                   a=store.afterlasso.sort((a,b) => b.recovered - a.recovered);
-                   d3.select(".res1").text("Maximum recovered cases occured in "+capitalizeFirstLetter(a[0].country)+" among the selected countries"); 
-                }
-                else if(str.includes("confirmed"))
-                {
-                   a=store.afterlasso.sort((a,b) => b.confirmed - a.confirmed);
-                   d3.select(".res1").text("Maximum confirmed cases occured in "+capitalizeFirstLetter(a[0].country)+" among the selected countries"); 
-                }
-                
-  
-                
-          
-              }
-              else if(1){
-                if(str.includes("death") || str.includes("fatal"))
-                {
-                   a=store.done.sort((a,b) => b.deaths - a.deaths);
-                   d3.select(".res1").text("Maximum death cases occured in "+capitalizeFirstLetter(a[0].country)); 
-                }
-                else if(str.includes("recovered"))
-                {
-                   a=store.done.sort((a,b) => b.recovered - a.recovered);
-                   d3.select(".res1").text("Maximum recovered cases occured in "+capitalizeFirstLetter(a[0].country)); 
-                }
-                else if(str.includes("confirmed"))
-                {
-                   a=store.done.sort((a,b) => b.confirmed - a.confirmed);
-                   d3.select(".res1").text("Maximum confirmed cases occured in "+capitalizeFirstLetter(a[0].country)); 
-                }
-                
-                
-              }
-              
-  
-            }
-            else if(str.includes("minimum"))
-            {
-              if(store.afterlasso.length>0)
-              {
-                
-                if(str.includes("death")|| str.includes("fatal"))
-                {
-                   a=store.afterlasso.sort((a,b) => a.deaths - b.deaths);
-                   d3.select(".res1").text("Minimum death cases occured in "+capitalizeFirstLetter(a[0].country)+" among the selected countries");
-                }
-                else if(str.includes("recovered"))
-                {
-                 a=store.afterlasso.sort((a,b) => a.recovered - b.recovered);
-                 d3.select(".res1").text("Minimum recovered cases occured in "+capitalizeFirstLetter(a[0].country)+" among the selected countries");
-                }
-                else if(str.includes("confirmed")|| str.includes("fatal"))
-                {
-                  a=store.afterlasso.sort((a,b) => a.confirmed - b.confirmed);
-                  d3.select(".res1").text("Minimum confirmed cases occured in "+capitalizeFirstLetter(a[0].country)+" among the selected countries");
-                }
-                 
-          
-              }
-              else if(1)
-              {
-                if(str.includes("death")|| str.includes("fatal"))
-                {
-                  a=store.done.sort((a,b) => a.deaths - b.deaths);
-                  d3.select(".res1").text("Minimum death cases occured in "+capitalizeFirstLetter(a[0].country));
-                }
-                else if(str.includes("recovered"))
-                {
-                 a=store.done.sort((a,b) => a.recovered - b.recovered);
-                 d3.select(".res1").text("Minimum recovered cases occured in "+capitalizeFirstLetter(a[0].country));
-                }
-                else if(str.includes("confirmed"))
-                {
-                 a=store.done.sort((a,b) => a.confirmed - b.confirmed);
-                 d3.select(".res1").text("Minimum confiremd cases occured in "+capitalizeFirstLetter(a[0].country));
-                }
-                
-              }
-              
-            }
-  
-           c=a[0].country
-           ii=d3.select("#G").selectAll("circle")._groups[0];
-            for( j=0;j<=180;j++){
-              i=ii[j];
-            if(currentvis=="confirmed"){
-           if(i.__data__.country==c)
-           {
-            
-             d3.select(i).transition().duration(1000).attr("r",radius(i.__data__.confirmed)+15).attr("fill","red").transition().duration(1000).attr("r",radius(i.__data__.confirmed))
-               .transition().duration(1000).attr("r",radius(i.__data__.confirmed)+15).transition().duration(1000).attr("r",radius(i.__data__.confirmed)).transition().duration(1000).attr("r",0).attr("fill","blue")
-           }
-            }
-            else if(currentvis=="death"){
-             if(i.__data__.country==c){
-         d3.select(i).transition().duration(1000).attr("r",radius(i.__data__.deaths)+10).attr("fill","red").transition().duration(1000).attr("r",radius(i.__data__.deaths))
-               .transition().duration(1000).attr("r",radius(i.__data__.deaths)+10).transition().duration(1000).attr("r",radius(i.__data__.deaths)).transition().duration(1000).attr("r",0).attr("fill","red")
-             }
-            }
-            else if(currentvis=="recovered"){
-             if(i.__data__.country==c){
-            d3.select(i).transition().duration(1000).attr("r",radius(i.__data__.recovered)+10).attr("fill","red").transition().duration(1000).attr("r",radius(i.__data__.recovered))
-               .transition().duration(1000).attr("r",radius(i.__data__.recovered)+10).transition().duration(1000).attr("r",radius(i.__data__.recovered)).transition().duration(1000).attr("r",).attr("fill","green")
-             }
-            }
-           }  
-  
-            l= d3.selectAll("rect")._groups[0]
-            let ln=d3.selectAll("rect")._groups[0].length-6
-       for(i=0;i<ln;i++)
-       {
-         if(l[i].__data__.country==a[0].country)
-         {
-           d3.select(l[i]).classed("selected1",true)
-          
-  
-         }
-         else{
-           d3.select(l[i]).classed("selected1",false)
-         }
-       }
-      
-  
-        l= d3.select("#G").selectAll("path")._groups[0]
-       for(i=0;i<180;i++)
-       {
-         if(l[i].__data__.country==a[0].country)
-         {
-           d3.select(l[i]).classed("selected1",true)
-         }
-         else{
-           d3.select(l[i]).classed("selected1",false)
-         }
-       }
-       store.currenthighlight=a[0].country
-       if(currentvis=="confirmed")store.done.sort((a,b) => b.confirmed - a.confirmed);
-       else if(currentvis=="death")store.done.sort((a,b) => b.deaths - a.deaths);
-       else if(currentvis=="recovered")store.done.sort((a,b) => b.recovered - a.recovered);
-  
-                 
-  
-  
-  
-      }
+       
   
     
   
@@ -4218,7 +4227,7 @@
         {
           document.getElementById('command').value=store.currentcommand
           str=store.currentcommand
-          document.getElementById('command').value="";
+          // document.getElementById('command').value="";
           if((/^(find|show)/).test(str) || (/maximum|minimum/).test(str))
       {
         
@@ -4452,7 +4461,7 @@
            
            document.getElementById('command').value=store.currentcommand;
            command();
-           document.getElementById('command').value="";
+          //  document.getElementById('command').value="";
          }
            
       }
@@ -5065,7 +5074,9 @@
     // Cancel the default action, if needed
     event.preventDefault();
     // Trigger the button element with a click
+    
     document.getElementById("command").placeholder="Enter query here"
+    
     command()
   }
   });
@@ -5205,7 +5216,7 @@
           if(store.currentcommand!=null){
             document.getElementById('command').value=store.currentcommand;
              command()
-             document.getElementById('command').value="";
+            //  document.getElementById('command').value="";
           }
           $( "#amount" ).val( (new Date(ui.values[ 0 ] *1000).toDateString() ) + " - " + (new Date(ui.values[ 1 ] *1000)).toDateString() );
         }
@@ -5238,12 +5249,12 @@
           var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
           if(cnt!=null)
           {
-            document.getElementById("res").textContent = "Showing "+cases+" cases "+" for all Countries of "+cnt+" from "+date1.getDate()+" of "+months[date1.getMonth()]
-            +" to "+date2.getDate()+" of "+months[date2.getMonth()]+".";
+            d3.select("#res").html("Showing "+cases+" cases "+" for All Countries of "+cnt+" from "+date1.getDate()+" of "+months[date1.getMonth()]
+            +" to "+date2.getDate()+" of "+months[date2.getMonth()]+".")
           }
          else if(countries.length == 0){
-            document.getElementById("res").textContent = "Showing "+cases+" cases "+" for all Countries from "+date1.getDate()+" of "+months[date1.getMonth()]
-            +" to "+date2.getDate()+" of "+months[date2.getMonth()]+".";
+          d3.select("#res").html("Showing "+cases+" cases "+" for All Countries from "+date1.getDate()+" of "+months[date1.getMonth()]
+            +" to "+date2.getDate()+" of "+months[date2.getMonth()]+".")
           }
           else if(countries.length<= 5){
             for(var i=0; i<countries.length; ++i){
@@ -5253,8 +5264,8 @@
                 }
                 else coutrylist += capitalizeFirstLetter(countries[i])+',';
             }
-            document.getElementById("res").textContent = "Showing "+cases+" cases "+" for"+ coutrylist +"from "+date1.getDate()+" of "+months[date1.getMonth()]
-            +" to "+date2.getDate()+" of "+months[date2.getMonth()]+".";
+            d3.select("#res").html("Showing "+cases+" cases "+" for"+"<span style='font-weight:bold;'>"+coutrylist+"</span>" +"from "+date1.getDate()+" of "+months[date1.getMonth()]
+            +" to "+date2.getDate()+" of "+months[date2.getMonth()]+".")
           }
           else{
             coutrylist=" "
@@ -5265,8 +5276,8 @@
                 }
                 else coutrylist += capitalizeFirstLetter(countries[i])+',';
             }
-            document.getElementById("res").textContent = "Showing "+cases+" cases "+" for"+ coutrylist +"from "+date1.getDate()+" of "+months[date1.getMonth()]
-            +" to "+date2.getDate()+" of "+months[date2.getMonth()]+".";
+            d3.select("#res").html("Showing "+cases+" cases "+" for"+ coutrylist +"from "+date1.getDate()+" of "+months[date1.getMonth()]
+            +" to "+date2.getDate()+" of "+months[date2.getMonth()]+".")
           }
       }
   
@@ -5338,7 +5349,7 @@
           
            document.getElementById('command').value=store.currentcommand;
            command();
-           document.getElementById('command').value="";
+          //  document.getElementById('command').value="";
          }
       }
   
@@ -5351,6 +5362,7 @@
   
       function cls()
       {
+        document.getElementById("command").value=""
         currentvis="confirmed";
                     document.getElementById("options").value="confirmed Cases"
         document.getElementById("countries").value="All"
@@ -5513,7 +5525,7 @@
            {
             document.getElementById('command').value=store.currentcommand;
            command();
-           document.getElementById('command').value="";
+          //  document.getElementById('command').value="";
            }
   }
   
