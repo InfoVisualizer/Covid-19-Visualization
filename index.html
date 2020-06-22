@@ -5264,7 +5264,7 @@
                 }
                 else coutrylist += capitalizeFirstLetter(countries[i])+',';
             }
-            d3.select("#res").html("Showing "+cases+" cases "+" for"+"<span style='font-weight:bold;'>"+coutrylist+"</span>" +"from "+date1.getDate()+" of "+months[date1.getMonth()]
+            d3.select("#res").html("Showing "+cases+" cases "+" for"+coutrylist+"from "+date1.getDate()+" of "+months[date1.getMonth()]
             +" to "+date2.getDate()+" of "+months[date2.getMonth()]+".")
           }
           else{
@@ -5276,7 +5276,7 @@
                 }
                 else coutrylist += capitalizeFirstLetter(countries[i])+',';
             }
-            d3.select("#res").html("Showing "+cases+" cases "+" for"+"<span style='font-weight:bold;'>"+coutrylist+"</span>" +"from "+date1.getDate()+" of "+months[date1.getMonth()]
+            d3.select("#res").html("Showing "+cases+" cases "+" for"+coutrylist+"from "+date1.getDate()+" of "+months[date1.getMonth()]
             +" to "+date2.getDate()+" of "+months[date2.getMonth()]+".")
           }
       }
