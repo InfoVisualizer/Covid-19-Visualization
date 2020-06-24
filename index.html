@@ -506,6 +506,8 @@
         store.currentstartingdate=null;
         store.currentendigndate=null;
         store.currentcontinet=null;
+        store.intialstart=null;
+        store.intialend=null;
             let x=0
             let y=0
             let k=1
@@ -616,7 +618,8 @@
           drawMap(prep(store.geoJSON))
           stackprocess()
           slidedata = store.sumdate;
-     
+          store.intialstart=(new Date(store.sumdate[0].date)).toLocaleDateString('en-US')
+          store.intialend=(new Date(store.sumdate[store.sumdate.length-1].date)).toLocaleDateString('en-US')
           drawline(store.sumdate)
             drawCircles(store.done,"blue")
             drawbar(store.done)
@@ -1561,7 +1564,7 @@
               
               var lasso_start = function() {
                     lasso.items() // reset size
-                        .classed("not_possible",true)
+                        .classed("not_possible",false)
                         .classed("selected",false)
                         .classed("selected1",false);
                 };
@@ -1571,12 +1574,12 @@
                     // Style the possible dots
                     lasso.possibleItems()
                         .classed("not_possible",false)
-                        .classed("possible",true)
+                        .classed("possible",false)
                         .classed("selected1",false);
             
                     // Style the not possible dot
                     lasso.notPossibleItems()
-                        .classed("not_possible",true)
+                        .classed("not_possible",false)
                         .classed("possible",false)
                         .classed("selected1",false);
                 };
@@ -1725,7 +1728,7 @@
         
               var lasso_start = function() {
                     lasso.items() // reset size
-                        .classed("not_possible",true)
+                        .classed("not_possible",false)
                         .classed("selected",false)
                         .classed("selected1",false);
                 };
@@ -1735,12 +1738,12 @@
                     // Style the possible dots
                     lasso.possibleItems()
                         .classed("not_possible",false)
-                        .classed("possible",true)
+                        .classed("possible",false)
                         .classed("selected1",false);
             
                     // Style the not possible dot
                     lasso.notPossibleItems()
-                        .classed("not_possible",true)
+                        .classed("not_possible",false)
                         .classed("possible",false)
                         .classed("selected1",false);
                 };
@@ -1886,7 +1889,7 @@
         
               var lasso_start = function() {
                     lasso.items() // reset size
-                        .classed("not_possible",true)
+                        .classed("not_possible",false)
                         .classed("selected",false)
                         .classed("selected1",false);
                 };
@@ -1896,12 +1899,12 @@
                     // Style the possible dots
                     lasso.possibleItems()
                         .classed("not_possible",false)
-                        .classed("possible",true)
+                        .classed("possible",false)
                         .classed("selected1",false);
             
                     // Style the not possible dot
                     lasso.notPossibleItems()
-                        .classed("not_possible",true)
+                        .classed("not_possible",false)
                         .classed("possible",false)
                         .classed("selected1",false);
                 };
@@ -2547,7 +2550,7 @@
   
       var lasso_start = function() {
                     lasso.items() // reset size
-                        .classed("not_possible",true)
+                        .classed("not_possible",false)
                         .classed("selected",false)
                         .classed("selected1",false);
                 };
@@ -2557,12 +2560,12 @@
                     // Style the possible dots
                     lasso.possibleItems()
                         .classed("not_possible",false)
-                        .classed("possible",true)
+                        .classed("possible",false)
                         .classed("selected1",false);
             
                     // Style the not possible dot
                     lasso.notPossibleItems()
-                        .classed("not_possible",true)
+                        .classed("not_possible",false)
                         .classed("possible",false)
                         .classed("selected1",false);
                 };
@@ -2886,12 +2889,12 @@
                     // Style the possible dots
                     lasso.possibleItems()
                         .classed("not_possible",false)
-                        .classed("possible",true)
+                        .classed("possible",false)
                         .classed("selected1",false);
             
                     // Style the not possible dot
                     lasso.notPossibleItems()
-                        .classed("not_possible",true)
+                        .classed("not_possible",false)
                         .classed("possible",false)
                         .classed("selected1",false);
                 };
@@ -3206,12 +3209,12 @@
                     // Style the possible dots
                     lasso.possibleItems()
                         .classed("not_possible",false)
-                        .classed("possible",true)
+                        .classed("possible",false)
                         .classed("selected1",false);
             
                     // Style the not possible dot
                     lasso.notPossibleItems()
-                        .classed("not_possible",true)
+                        .classed("not_possible",false)
                         .classed("possible",false)
                         .classed("selected1",false);
                 };
@@ -3741,7 +3744,9 @@
 
                   let lne=d3.select("#container").selectAll("circle")._groups[0]
                   let ln=d3.select("#container").selectAll("circle")._groups[0].length
-
+                  
+              if(store.currentstartingdate!=null && store.currentendigndate!=null && store.intialstart!=(new Date(store.currentstartingdate)).toLocaleDateString('en-US') && store.intialend!=(new Date(store.currentendigndate)).toLocaleDateString('en-US')){
+                console.log("hoga")
                   for(i of lne)
                   {
                     if(i.getAttribute("case") == currentvis && i.__data__.date>=x1-1 && i.__data__.date<=x2)
@@ -3761,6 +3766,7 @@
                     }
 
                   }
+              }
             //         total_case_print(store.done);
             // total_case_print1(store.done);
             // total_case_print2(store.done);
