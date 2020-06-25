@@ -1680,10 +1680,10 @@
   
        if(store.currentcommand!=null)
          {
-           
+           let temp=document.getElementById('command').value
            document.getElementById('command').value=store.currentcommand;
            command();
-          //  document.getElementById('command').value="";
+           document.getElementById('command').value=temp;
          }
         
                 };
@@ -1845,9 +1845,10 @@
        if(store.currentcommand!=null)
          {
            
+          let temp=document.getElementById('command').value
            document.getElementById('command').value=store.currentcommand;
            command();
-          //  document.getElementById('command').value="";
+           document.getElementById('command').value=temp;
          }
                 };
                 
@@ -2005,9 +2006,10 @@
        if(store.currentcommand!=null)
          {
            
+          let temp=document.getElementById('command').value
            document.getElementById('command').value=store.currentcommand;
            command();
-          //  document.getElementById('command').value="";
+           document.getElementById('command').value=temp;
          }
         
                 };
@@ -2333,9 +2335,10 @@
           if(store.currentcommand!=null)
          {
            
+          let temp=document.getElementById('command').value
            document.getElementById('command').value=store.currentcommand;
            command();
-          //  document.getElementById('command').value="";
+           document.getElementById('command').value=temp;
          }
             
         }
@@ -2651,9 +2654,10 @@
          $("#countries").trigger("chosen:updated");
        if(store.currentcommand!=null)
          {
+          let temp=document.getElementById('command').value
            document.getElementById('command').value=store.currentcommand;
            command();
-          //  document.getElementById('command').value="";
+           document.getElementById('command').value=temp;
          }
   
                 };
@@ -2979,10 +2983,10 @@
          $("#countries").trigger("chosen:updated");
        if(store.currentcommand!=null)
          {
-          
+          let temp=document.getElementById('command').value
            document.getElementById('command').value=store.currentcommand;
            command();
-          //  document.getElementById('command').value="";
+           document.getElementById('command').value=temp;
          }
   
                 };
@@ -3300,10 +3304,10 @@
   
        if(store.currentcommand!=null)
          {
-          //  console.log("asci")
+          let temp=document.getElementById('command').value
            document.getElementById('command').value=store.currentcommand;
            command();
-          //  document.getElementById('command').value="";
+           document.getElementById('command').value=temp;
          }
   
                 };
@@ -3746,7 +3750,7 @@
                   let ln=d3.select("#container").selectAll("circle")._groups[0].length
                   
               if(store.currentstartingdate!=null && store.currentendigndate!=null && store.intialstart!=(new Date(store.currentstartingdate)).toLocaleDateString('en-US') && store.intialend!=(new Date(store.currentendigndate)).toLocaleDateString('en-US')){
-                console.log("hoga")
+             
                   for(i of lne)
                   {
                     if(i.getAttribute("case") == currentvis && i.__data__.date>=x1-1 && i.__data__.date<=x2)
@@ -3793,9 +3797,10 @@
             if(store.currentcommand!=null)
             {
               
-              document.getElementById("command").value=store.currentcommand
-              command()
-              // document.getElementById('command').value="";
+              let temp=document.getElementById('command').value
+           document.getElementById('command').value=store.currentcommand;
+           command();
+           document.getElementById('command').value=temp;
             }
             
   
@@ -3853,9 +3858,10 @@
             ResultShow(store.currentselectedcountries,currentvis,stdate,endate,store.currentcontinet);
             drawline(slidedata.slice(str,end+1))}
           if(store.currentcommand!=null){
-            document.getElementById("command").value=store.currentcommand
-             command()
-            //  document.getElementById('command').value="";
+            let temp=document.getElementById('command').value
+           document.getElementById('command').value=store.currentcommand;
+           command();
+           document.getElementById('command').value=temp;
           }
           
           $( "#amount" ).val( (new Date(ui.values[ 0 ] *1000).toDateString() ) + " - " + (new Date(ui.values[ 1 ] *1000)).toDateString() );
@@ -3938,12 +3944,12 @@
 
 
 
-       if((/^(find|show)/).test(str) || (/maximum|minimum/).test(str))
+       if((/^(find|show)/).test(str) || (/maximum|minimum|highest|lowest/).test(str))
       {
         
         let a=[]
         store.currentcommand=str;
-        if(str.includes("maximum"))
+        if(str.includes("maximum")|| str.includes("highest"))
             {
               if(store.afterlasso.length>0)
               {
@@ -3954,7 +3960,7 @@
                    a=store.afterlasso.sort((a,b) => b.deaths - a.deaths);
                    d3.select(".res1").html("Maximum death cases occured in "+ "<span style='font-weight:bold;'>" + capitalizeFirstLetter(a[0].country) +"</span>"+" among the selected countries"); 
                 }
-                else if(str.includes("recovered"))
+                else if(str.includes("recovered") || str.includes("healing"))
                 {
                    a=store.afterlasso.sort((a,b) => b.recovered - a.recovered);
                    d3.select(".res1").html("Maximum recovered cases occured in "+ "<span style='font-weight:bold;'>" + capitalizeFirstLetter(a[0].country) +"</span>"+" among the selected countries"); 
@@ -3975,7 +3981,7 @@
                    a=store.done.sort((a,b) => b.deaths - a.deaths);
                    d3.select(".res1").html("Maximum death cases occured in "+ "<span style='font-weight:bold;'>" + capitalizeFirstLetter(a[0].country) +"</span>"); 
                 }
-                else if(str.includes("recovered"))
+                else if(str.includes("recovered") || str.includes("healing"))
                 {
                    a=store.done.sort((a,b) => b.recovered - a.recovered);
                    d3.select(".res1").html("Maximum recovered cases occured in "+ "<span style='font-weight:bold;'>" + capitalizeFirstLetter(a[0].country) +"</span>"); 
@@ -3991,7 +3997,7 @@
               
   
             }
-            else if(str.includes("minimum"))
+            else if(str.includes("minimum") || str.includes("lowest"))
             {
               if(store.afterlasso.length>0)
               {
@@ -4001,12 +4007,12 @@
                    a=store.afterlasso.sort((a,b) => a.deaths - b.deaths);
                    d3.select(".res1").html("Minimum death cases occured in "+ "<span style='font-weight:bold;'>" + capitalizeFirstLetter(a[0].country) +"</span>"+" among the selected countries");
                 }
-                else if(str.includes("recovered"))
+                else if(str.includes("recovered") || str.includes("healing"))
                 {
                  a=store.afterlasso.sort((a,b) => a.recovered - b.recovered);
                  d3.select(".res1").html("Minimum recovered cases occured in "+ "<span style='font-weight:bold;'>" + capitalizeFirstLetter(a[0].country) +"</span>"+" among the selected countries");
                 }
-                else if(str.includes("confirmed")|| str.includes("fatal"))
+                else if(str.includes("confirmed"))
                 {
                   a=store.afterlasso.sort((a,b) => a.confirmed - b.confirmed);
                   d3.select(".res1").html("Minimum confirmed cases occured in "+ "<span style='font-weight:bold;'>" + capitalizeFirstLetter(a[0].country) +"</span>"+" among the selected countries");
@@ -4021,7 +4027,7 @@
                   a=store.done.sort((a,b) => a.deaths - b.deaths);
                   d3.select(".res1").html("Minimum death cases occured in "+ "<span style='font-weight:bold;'>" + capitalizeFirstLetter(a[0].country) +"</span>");
                 }
-                else if(str.includes("recovered"))
+                else if(str.includes("recovered") || str.includes("healing"))
                 {
                  a=store.done.sort((a,b) => a.recovered - b.recovered);
                  d3.select(".res1").html("Minimum recovered cases occured in "+ "<span style='font-weight:bold;'>" + capitalizeFirstLetter(a[0].country) +"</span>");
@@ -4103,8 +4109,9 @@
 
 
 
-       else if((/^(select|show)/).test(str) || (/death cases|confirmed cases|recovered cases|fatal cases/).test(str))
+       else if(((/^(select|show)/).test(str) && (/death cases|confirmed cases|recovered cases|fatal cases/).test(str) )|| (/death cases|confirmed cases|recovered cases|fatal cases/).test(str))
        {
+         
         if(str.includes("death cases") || str.includes("fatal cases")){
               currentvis="death";
               document.getElementById("options").value="Death Cases"
@@ -4191,9 +4198,10 @@
           if(store.currentcommand!=null)
          {
            
+          let temp=document.getElementById('command').value
            document.getElementById('command').value=store.currentcommand;
            command();
-          //  document.getElementById('command').value="";
+           document.getElementById('command').value=temp;
          }
           
        }
@@ -4231,7 +4239,10 @@
   
         if(store.currentcommand!=null)
         {
-          document.getElementById('command').value=store.currentcommand
+          let temp=document.getElementById('command').value
+           document.getElementById('command').value=store.currentcommand;
+           command();
+           document.getElementById('command').value=temp;
           str=store.currentcommand
           // document.getElementById('command').value="";
           if((/^(find|show)/).test(str) || (/maximum|minimum/).test(str))
@@ -4425,8 +4436,9 @@
       
         
       }
-      else if((/^select/).test(str)||(/asia|north america|south america|africa|oceania|antarctica|europe/).test(str))
+      else if(((/^select/).test(str)&&(/asia|north america|south america|africa|oceania|antarctica|europe/).test(str)) || (/asia|north america|south america|africa|oceania|antarctica|europe/).test(str))
       {
+        
            if(str.includes("asia"))
            {
             store.currentcontinet="Asia"
@@ -4465,9 +4477,10 @@
            if(store.currentcommand!=null)
          {
            
+          let temp=document.getElementById('command').value
            document.getElementById('command').value=store.currentcommand;
            command();
-          //  document.getElementById('command').value="";
+           document.getElementById('command').value=temp;
          }
            
       }
@@ -4480,6 +4493,7 @@
        }
 
        else if((/^select/).test(str) || 1){
+         console.log("aslam")
           
           a= str.split(",")
           a[0]=a[0].replace("select ","")
@@ -5220,9 +5234,10 @@
             ResultShow(store.currentselectedcountries,currentvis,stdate,endate,store.currentcontinet);
             drawline(slidedata.slice(str,end+1))}
           if(store.currentcommand!=null){
-            document.getElementById('command').value=store.currentcommand;
-             command()
-            //  document.getElementById('command').value="";
+            let temp=document.getElementById('command').value
+           document.getElementById('command').value=store.currentcommand;
+           command();
+           document.getElementById('command').value=temp;
           }
           $( "#amount" ).val( (new Date(ui.values[ 0 ] *1000).toDateString() ) + " - " + (new Date(ui.values[ 1 ] *1000)).toDateString() );
         }
@@ -5352,10 +5367,10 @@
   
            if(store.currentcommand!=null)
          {
-          
+          let temp=document.getElementById('command').value
            document.getElementById('command').value=store.currentcommand;
            command();
-          //  document.getElementById('command').value="";
+           document.getElementById('command').value=temp;
          }
       }
   
@@ -5529,9 +5544,10 @@
   
            if(store.currentcommand!=null)
            {
-            document.getElementById('command').value=store.currentcommand;
+            let temp=document.getElementById('command').value
+           document.getElementById('command').value=store.currentcommand;
            command();
-          //  document.getElementById('command').value="";
+           document.getElementById('command').value=temp;
            }
   }
   
