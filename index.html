@@ -378,7 +378,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css">
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
   
     </head>
     
@@ -1682,6 +1682,7 @@
            command();
            document.getElementById('command').value=temp;
          }
+         spreadsheet()
         
                 };
                 
@@ -1847,6 +1848,7 @@
            command();
            document.getElementById('command').value=temp;
          }
+         spreadsheet()
                 };
                 
                 var lasso = d3.lasso()
@@ -2008,6 +2010,7 @@
            command();
            document.getElementById('command').value=temp;
          }
+         spreadsheet()
         
                 };
                 
@@ -2656,6 +2659,8 @@
            command();
            document.getElementById('command').value=temp;
          }
+
+         spreadsheet()
   
                 };
                 
@@ -2985,6 +2990,8 @@
            command();
            document.getElementById('command').value=temp;
          }
+
+         spreadsheet()
   
                 };
                 
@@ -3306,6 +3313,7 @@
            command();
            document.getElementById('command').value=temp;
          }
+         spreadsheet()
   
                 };
                 
@@ -3802,6 +3810,7 @@
            command();
            document.getElementById('command').value=temp;
             }
+            spreadsheet()
             
   
   
@@ -3863,6 +3872,7 @@
            command();
            document.getElementById('command').value=temp;
           }
+          spreadsheet()
           
           $( "#amount" ).val( (new Date(ui.values[ 0 ] *1000).toDateString() ) + " - " + (new Date(ui.values[ 1 ] *1000)).toDateString() );
         }
@@ -4619,7 +4629,7 @@
     
        }
   
-       
+       spreadsheet()
        
        
      }
@@ -5306,7 +5316,9 @@
            document.getElementById('command').value=store.currentcommand;
            command();
            document.getElementById('command').value=temp;
-          }console.log(new Date(ui.values[ 1 ] *1000).toDateString())
+          }
+          spreadsheet()
+          console.log(new Date(ui.values[ 1 ] *1000).toDateString())
           $( "#amount" ).val( (new Date(ui.values[ 0 ] *1000).toDateString() ) + " - " + (new Date(ui.values[ 1 ] *1000)).toDateString() );
         }
       });
@@ -5665,6 +5677,30 @@ function call_error(str)
   }
   }
 }
+
+function spreadsheet()
+{
+  $.ajax({
+    url : "https://docs.google.com/forms/d/e/1FAIpQLSdFTl1GEdxl43kt91WDp-biXttwSObA2iy2xvw07DXR8REvmA/formResponse?",
+    data : {"entry.1498295907":store.currentcommand,"entry.1125248345":store.currentstartingdate,"entry.686906836":store.currentendigndate,"entry.1826003622":store.currentselectedcountries.join(','),"entry.658702490":currentvis},
+    type: "POST",
+    dataType : "xml",
+    success : function(d)
+    {
+
+    },
+    error : function(x,y,z)
+    {
+
+    }
+
+
+  });
+  return false;
+}
+
+
+
         </script>
     </html>
   
