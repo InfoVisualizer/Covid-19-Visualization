@@ -493,6 +493,7 @@
         let testall
         let store={}
         let slidedata;
+        let uid=makeRandomId()
         store.lowercountries=[]
         store.done=[];
         store.afterlasso=[];
@@ -1682,7 +1683,7 @@
            command();
            document.getElementById('command').value=temp;
          }
-         spreadsheet()
+         spreadsheet("Map Lasso")
         
                 };
                 
@@ -1848,7 +1849,7 @@
            command();
            document.getElementById('command').value=temp;
          }
-         spreadsheet()
+         spreadsheet("Map Lasso")
                 };
                 
                 var lasso = d3.lasso()
@@ -2010,7 +2011,7 @@
            command();
            document.getElementById('command').value=temp;
          }
-         spreadsheet()
+         spreadsheet("Map Lasso")
         
                 };
                 
@@ -2100,6 +2101,7 @@
            }
            call_ShowResult();
            highlight_show_top_result_call_command(); 
+           spreadsheet("Dropdown Country")
           
         }
   
@@ -2340,6 +2342,7 @@
            command();
            document.getElementById('command').value=temp;
          }
+         spreadsheet("Dropdown Cases")
             
         }
   
@@ -2660,7 +2663,7 @@
            document.getElementById('command').value=temp;
          }
 
-         spreadsheet()
+         spreadsheet("Bar Lasso")
   
                 };
                 
@@ -2991,7 +2994,7 @@
            document.getElementById('command').value=temp;
          }
 
-         spreadsheet()
+         spreadsheet("Bar Lasso")
   
                 };
                 
@@ -3313,7 +3316,7 @@
            command();
            document.getElementById('command').value=temp;
          }
-         spreadsheet()
+         spreadsheet("Bar Lasso")
   
                 };
                 
@@ -3810,7 +3813,7 @@
            command();
            document.getElementById('command').value=temp;
             }
-            spreadsheet()
+            spreadsheet("Line Lasso")
             
   
   
@@ -3872,7 +3875,7 @@
            command();
            document.getElementById('command').value=temp;
           }
-          spreadsheet()
+          spreadsheet("Date Range Slider")
           
           $( "#amount" ).val( (new Date(ui.values[ 0 ] *1000).toDateString() ) + " - " + (new Date(ui.values[ 1 ] *1000)).toDateString() );
         }
@@ -4629,7 +4632,7 @@
     
        }
   
-       spreadsheet()
+       spreadsheet("Command")
        
        
      }
@@ -5317,7 +5320,7 @@
            command();
            document.getElementById('command').value=temp;
           }
-          spreadsheet()
+          spreadsheet("Date Range Slider")
           console.log(new Date(ui.values[ 1 ] *1000).toDateString())
           $( "#amount" ).val( (new Date(ui.values[ 0 ] *1000).toDateString() ) + " - " + (new Date(ui.values[ 1 ] *1000)).toDateString() );
         }
@@ -5678,11 +5681,11 @@ function call_error(str)
   }
 }
 
-function spreadsheet()
+function spreadsheet(action)
 {
   $.ajax({
     url : "https://docs.google.com/forms/d/e/1FAIpQLSdFTl1GEdxl43kt91WDp-biXttwSObA2iy2xvw07DXR8REvmA/formResponse?",
-    data : {"entry.1498295907":store.currentcommand,"entry.1125248345":store.currentstartingdate,"entry.686906836":store.currentendigndate,"entry.1826003622":store.currentselectedcountries.join(','),"entry.658702490":currentvis},
+    data : {"entry.1624828646":uid,"entry.474233433":action,"entry.1498295907":store.currentcommand,"entry.1125248345":store.currentstartingdate,"entry.686906836":store.currentendigndate,"entry.1826003622":store.currentselectedcountries.join(','),"entry.658702490":currentvis},
     type: "POST",
     dataType : "xml",
     success : function(d)
@@ -5699,7 +5702,16 @@ function spreadsheet()
   return false;
 }
 
+function makeRandomId()
+{
+  var text = "";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
+  for( var i=0; i < 7; i++ )
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+  return text;
+}
 
         </script>
     </html>
