@@ -5684,8 +5684,8 @@ function call_error(str)
 function spreadsheet(action)
 {
   $.ajax({
-    url : "https://docs.google.com/forms/d/1brtGk9o2iBQyNkrHb0c0HCztNELg-5_PrbyEmX3_Mio/formResponse?",
-    data : {"entry.1361953002":uid,"entry.1048643051":action,"entry.2116475034":store.currentcommand,"entry.1521874749":store.currentstartingdate,"entry.1992785055":store.currentendigndate,"entry.1627697452":store.currentselectedcountries.join(','),"entry.89402784":currentvis},
+    url : "https://docs.google.com/forms/d/e/1FAIpQLSdFTl1GEdxl43kt91WDp-biXttwSObA2iy2xvw07DXR8REvmA/formResponse?",
+    data : {"entry.1624828646":uid,"entry.474233433":action,"entry.1498295907":store.currentcommand,"entry.1125248345":store.currentstartingdate,"entry.686906836":store.currentendigndate,"entry.1826003622":store.currentselectedcountries.join(','),"entry.658702490":currentvis},
     type: "POST",
     dataType : "xml",
     success : function(d)
