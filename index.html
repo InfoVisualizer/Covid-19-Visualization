@@ -5685,7 +5685,7 @@ function spreadsheet(action)
 {
   $.ajax({
     url : "https://docs.google.com/forms/d/e/1FAIpQLScLl_DE1n_NyOnoCXWUu2gct3REaDQ7ByUkWDLLOOioBE-EMw/formResponse?",
-    data : {"entry.1361953002":uid,"entry.1048643051":action,"entry.2116475034":store.currentcommand,"entry.1521874749":store.currentstartingdate,"entry.1992785055":store.currentendigndate,"entry.1627697452":store.currentselectedcountries.join(','),"entry.89402784":currentvis},	    data : {"entry.1624828646":uid,"entry.474233433":action,"entry.1498295907":store.currentcommand,"entry.1125248345":store.currentstartingdate,"entry.686906836":store.currentendigndate,"entry.1826003622":store.currentselectedcountries.join(','),"entry.658702490":currentvis},
+    data : {"entry.1624828646":uid,"entry.474233433":action,"entry.1498295907":store.currentcommand,"entry.1125248345":store.currentstartingdate,"entry.686906836":store.currentendigndate,"entry.1826003622":store.currentselectedcountries.join(','),"entry.658702490":currentvis},
     type: "POST",
     dataType : "xml",
     success : function(d)
